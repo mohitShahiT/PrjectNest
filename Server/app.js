@@ -1,13 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 const userRouter = require("./router/userRoute");
 const errorController = require("./controller/errorController");
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json({ limit: "50kb" }));
-
+app.use(cookieParser());
+//test middleware
 app.use((req, res, next) => {
+  // console.log(req.cookies); //only if the request comes from the browser
   next();
 });
 

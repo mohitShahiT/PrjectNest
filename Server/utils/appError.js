@@ -4,7 +4,7 @@ class AppError extends Error {
     this.statusCode = statusCode;
     this.message = message;
     this.status = `${this.statusCode}`.startsWith("5") ? "error" : "fail"; // if the status code is 500 then internal server error otherwise fail
-    this.operational = true;
+    this.isOperational = true;
     Error.captureStackTrace(this, this.constructor);
   }
 }

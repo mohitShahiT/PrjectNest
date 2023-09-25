@@ -22,15 +22,15 @@ const userSchema = new mongoose.Schema(
       required: [true, "user must have last name"],
     },
     middleName: String,
-    // role: {
-    //     type: String,
-    //     required: [true, "user must have a role"],
-    //     enum:{
-    //         values: ["member", "supervisor", "coordinator"],
-    //         message: "role must be one of: `member`, `supervisor`, `coordinator`"
-    //     },
-    //     default: "member"
-    // }
+    role: {
+      type: String,
+      required: [true, "user must have a role"],
+      enum: {
+        values: ["admin", "user"],
+        message: "role must be one of: `user`,`admin`",
+      },
+      default: "user",
+    },
     photo: {
       type: String,
       default: "default-user-photo.jpg",

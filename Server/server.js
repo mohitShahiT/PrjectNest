@@ -14,9 +14,13 @@ io.on("connection", (socket) => {
   console.log(socket);
 });
 
-const mongoLocalURI = process.env.MONGO_LOCAL_URI;
+const mongoLocalURI = process.env.MONGODB_LOCAL_URI;
+const mongoCloudURI = process.env.MONGODB_CLOUD_URI.replace(
+  "<password>",
+  process.env.MONGODB_CLOUD_PASSWORD
+);
 mongoose
-  .connect(mongoLocalURI)
+  .connect(mongoCloudURI)
   .then(() => {
     console.log("connected to the database...");
   })
@@ -25,6 +29,9 @@ mongoose
   });
 
 const PORT = process.env.PORT || 3000;
+
 httpSever.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}...`);
+  console.log(
+    `${process.env.NODE_ENV.toUpperCase()}: Listening on port ${PORT}...`
+  );
 });

@@ -3,7 +3,13 @@ const userController = require("../controller/userController");
 const authController = require("../controller/authController");
 const router = express.Router();
 
-router.route("/").get(userController.getAllUser);
+router
+  .route("/")
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.getAllUser
+  );
 router
   .route("/update-my-password")
   .post(authController.protect, authController.updateMyPassword);

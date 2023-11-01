@@ -1,13 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./router/userRoute");
+const projectRouter = require("./router/projectRoute");
 const errorController = require("./controller/errorController");
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json({ limit: "50kb" }));
 app.use(cookieParser());
+app.use(cors());
 //test middleware
 app.use((req, res, next) => {
   // console.log(req.cookies); //only if the request comes from the browser
@@ -15,6 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/project", projectRouter);
 
 //if no route is defined req, res object reaches here
 app.use("*", (req, res) => {

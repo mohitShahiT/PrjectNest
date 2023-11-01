@@ -20,7 +20,7 @@ const mongoCloudURI = process.env.MONGODB_CLOUD_URI.replace(
   process.env.MONGODB_CLOUD_PASSWORD
 );
 mongoose
-  .connect(mongoCloudURI)
+  .connect(mongoLocalURI)
   .then(() => {
     console.log("connected to the database...");
   })

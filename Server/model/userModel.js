@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const roles = require("../utils/userRoles");
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -26,10 +27,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "user must have a role"],
       enum: {
-        values: ["admin", "user"],
-        message: "role must be one of: `user`,`admin`",
+        values: roles,
+        message: `role must be one of: ${roles.join(", ")}`,
       },
-      default: "user",
+      default: "student",
     },
     photo: {
       type: String,

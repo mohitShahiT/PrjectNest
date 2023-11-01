@@ -4,6 +4,7 @@ const User = require("../model/userModel");
 const filterObject = require("../utils/filterObject");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const roles = require("../utils/userRoles");
 
 const signJWT = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -144,4 +145,26 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = user;
 
   next();
+});
+
+exports.assignRole = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const role = req.body.role || "student";
+  roles.shift();
+  console.log(roles);
+  if (!roles.includes(role))
+    return next(new AppError(400, `cannot assign the role - ${role}`));
+  const user = await User.findByIdAndUpdate(
+    id,
+    { role },
+    { new: true, runValidators: true }
+  );
+  if (!user) return next(new AppError(400, "user not found"));
+  res.status(200).json({
+    status: "success",
+
+    data: {
+      user,
+    },
+  });
 });

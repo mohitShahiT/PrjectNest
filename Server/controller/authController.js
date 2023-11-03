@@ -151,7 +151,6 @@ exports.assignRole = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const role = req.body.role || "student";
   roles.shift();
-  console.log(roles);
   if (!roles.includes(role))
     return next(new AppError(400, `cannot assign the role - ${role}`));
   const user = await User.findByIdAndUpdate(

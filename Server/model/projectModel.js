@@ -32,16 +32,17 @@ const projectSchema = new mongoose.Schema(
 
 //creating rooms for the project
 projectSchema.pre("save", async function (next) {
-  if (!this.isNew) next();
+  if (!this.isNew) return next();
+
   const members = this.members.map((mem) => mem);
   const supervisedMembers = members.map((mem) => mem);
   if (this.supervisor) supervisedMembers.push(this.supervisor);
-  const memberRoomData = {
+  const supervisedRoomData = {
     name: `${this.name.split(" ").join("-")}-supervised-team-room`,
     roomtype: "supervised-team-room",
     members: supervisedMembers,
   };
-  const memberRoom = await Room.create(memberRoomData);
+  const supervisedRoom = await Room.create(supervisedRoomData);
   const teamRoomData = {
     name: `${this.name.split(" ").join("-")}-members-team-room`,
     roomtype: "members-team-room",
@@ -49,11 +50,12 @@ projectSchema.pre("save", async function (next) {
   };
   const teamRoom = await Room.create(teamRoomData);
 
-  if (!memberRoom || !teamRoom) {
+  if (!supervisedRoom || !teamRoom) {
     return next(new AppError(500, "somethinge went wrong please try again"));
   }
-  this.rooms.push(memberRoom.id);
+  this.rooms.push(supervisedRoom.id);
   this.rooms.push(teamRoom.id);
+  next();
 });
 
 const Project = mongoose.model("Project", projectSchema);

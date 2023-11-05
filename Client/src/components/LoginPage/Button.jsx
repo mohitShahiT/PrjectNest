@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
 import styles from "./Button.module.css";
-const Button = (props) => {
+
+const Button = ({ className, handleClick, children }) => {
   return (
     <>
-      <button className={props.className}>{props.children}</button>
+      <button className={className} onClick={handleClick}>
+        {children}{" "}
+      </button>
     </>
   );
 };

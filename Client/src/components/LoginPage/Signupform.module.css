@@ -1,0 +1,147 @@
+.Signupform {
+  position: absolute;
+  top: 3vh;
+  left: 30vw;
+  background-color: #090b18;
+  background-color: #00415a;
+  background-color: #001f2b;
+  background-color: #001f2bea;
+
+  height: 96vh;
+  width: 45vw;
+  border-radius: 4%;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 50%;
+  height: 3rem;
+  padding: 15px;
+
+  font-size: large;
+  color: black;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font-family: "Times New Roman", Times, serif;
+  background-color: rgb(231, 225, 225);
+}
+.submit {
+  width: 100%;
+  text-align: center;
+  margin-top: 2px;
+}
+
+input[type="submit"] {
+  padding: 0px;
+  width: 30%;
+  color: black;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #032e3f;
+  background-color: #0b3f53;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: 300;
+  font-size: large;
+  border: none;
+  color: rgb(255, 254, 254);
+}
+input[type="submit"]:hover {
+  background-color: #032e3f;
+
+  transition-duration: 1s;
+}
+.Signupform_quit {
+  padding: 15px;
+  text-align: end;
+  font-size: large;
+}
+
+form {
+  padding: 10px;
+}
+.inputbox {
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  /* text-align: center; */
+
+  align-items: center;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+  color: rgb(170, 163, 163);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.cross {
+  cursor: pointer;
+  font-size: 25px;
+  background-color: transparent;
+  border: none;
+}
+
+.cross:hover {
+  color: rgb(150, 150, 150);
+  transition-duration: 1s;
+}
+
+h1 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.errorsection {
+  color: rgb(255, 19, 19);
+  /* text-align: center; */
+  font-size: 10px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* font-weight: bold; */
+  align-items: flex-start;
+  visibility: hidden;
+  max-width: 500px;
+  padding: 3px;
+}
+
+input:invalid[focused="true"] ~ p {
+  visibility: visible;
+}
+
+.role {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: azure;
+  border: none;
+  height: 2rem;
+  width: inherit;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+select {
+  border-radius: 3px;
+  height: 100%;
+  color: black;
+  margin-left: 2rem;
+  width: 200px;
+  border-color: transparent;
+}
+option {
+  color: black;
+}
+div p {
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  height: 10px;
+  color: azure;
+}

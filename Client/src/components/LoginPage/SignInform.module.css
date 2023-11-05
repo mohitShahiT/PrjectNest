@@ -89,3 +89,9 @@ form {
 h1 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+  color: rgb(170, 163, 163);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}

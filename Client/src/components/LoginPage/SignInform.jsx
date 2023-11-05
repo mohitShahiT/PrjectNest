@@ -10,25 +10,28 @@ const SignInform = ({ clicked, handleClick }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    const response = await fetch("http://localhost:8000/api/v1/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/JSON",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-    if (data.status === "success") {
-      navigate("/home");
-    } else {
-      navigate("/");
-      alert("Invalid Email or Password");
-      handleClick(!clicked);
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/JSON",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      if (data.status === "success") {
+        navigate("/home");
+      } else {
+        navigate("/");
+        alert("Invalid Email or Password");
+        handleClick(!clicked);
+      }
+    } catch (error) {
+      alert(error);
     }
 
     // handleClick(!clicked);
@@ -50,7 +53,7 @@ const SignInform = ({ clicked, handleClick }) => {
           </Link>
         </button>
       </div>
-      <h1 style={{ textAlign: "center" }}> SignIn</h1>
+      <h1 style={{ textAlign: "center", color: "azure" }}> SignIn</h1>
       <form onSubmit={handleSubmit}>
         <InputItem
           value={email}

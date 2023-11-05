@@ -8,7 +8,7 @@ router
   .get(
     authController.protect,
     authController.restrictTo("admin"),
-    userController.getAllUser
+    userController.getAllUsers
   );
 router
   .route("/update-my-password")

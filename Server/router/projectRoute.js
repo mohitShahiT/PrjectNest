@@ -53,12 +53,10 @@ router
     authController.restrictTo("admin"),
     projectController.removeSupervisor
   );
-router
-  .route("/:id/rooms")
-  .get(
-    authController.protect,
-    authController.restrictTo("student", "supervisor"),
-    roomController.getRooms
-  );
+router.route("/:id/rooms").get(
+  authController.protect,
+  // authController.restrictTo("student", "supervisor"),
+  projectController.getProjectRooms
+);
 
 module.exports = router;

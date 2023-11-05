@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./router/userRoute");
 const projectRouter = require("./router/projectRoute");
+const roomRouter = require("./router/roomRoute");
 const errorController = require("./controller/errorController");
 const app = express();
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/project", projectRouter);
+app.use("/api/v1/room", roomRouter);
 
 //if no route is defined req, res object reaches here
 app.use("*", (req, res) => {

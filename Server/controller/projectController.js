@@ -206,3 +206,30 @@ exports.removeSupervisor = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getProjectRooms = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const project = await Project.findById(id);
+  if (!project) return next(new AppError(404, "project not found"));
+  const roomsPromises = project.rooms.map(async (room) => {
+    return await Room.findById(room);
+  });
+  const rooms = await Promise.all(roomsPromises);
+  const finalRooms = [];
+  console.log(req.user.firstName, req.user.role);
+  rooms.forEach((room) => {
+    room.members.forEach((member) => {
+      if (member._id.toString() === req.user.id) finalRooms.push(room);
+      //comapring not done
+    });
+  });
+  if (finalRooms.length === 0)
+    return next(new AppError(401, "you are not the member of this project"));
+  res.status(200).json({
+    status: "success",
+    total: finalRooms.length,
+    data: {
+      rooms: finalRooms,
+    },
+  });
+});

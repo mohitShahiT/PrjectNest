@@ -30,6 +30,35 @@ router
     authController.restrictTo("admin"),
     projectController.addMembers
   );
-router.route("/:id/rooms").get(authController.protect, roomController.getRooms);
+
+router
+  .route("/:id/remove-member")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    projectController.removeMember
+  );
+
+router
+  .route("/:id/add-supervisor")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    projectController.addSupervisor
+  );
+router
+  .route("/:id/remove-supervisor")
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    projectController.removeSupervisor
+  );
+router
+  .route("/:id/rooms")
+  .get(
+    authController.protect,
+    authController.restrictTo("student", "supervisor"),
+    roomController.getRooms
+  );
 
 module.exports = router;

@@ -24,6 +24,17 @@ const roomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+roomSchema.methods.addToRoom = function (member) {
+  this.members.push(member);
+};
+
+roomSchema.methods.removeFromRoom = function (member) {
+  const index = this.members.indexOf(member);
+  if (index > -1) {
+    this.members.splice(index, 1);
+  }
+};
+
 const Room = mongoose.model("Room", roomSchema);
 
 module.exports = Room;

@@ -59,4 +59,10 @@ router.route("/:id/rooms").get(
   projectController.getProjectRooms
 );
 
+router.route("/:id/gantt-chart").get(
+  authController.protect,
+  // authController.restrictTo("student", "supervisor"),
+  projectController.getProjectGanttChart
+);
+
 module.exports = router;

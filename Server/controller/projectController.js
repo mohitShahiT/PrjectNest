@@ -4,9 +4,10 @@ const Room = require("../model/roomModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const filterObject = require("../utils/filterObject");
+const GanttChart = require("../model/ganttChartModel");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
-  const projects = await Project.find();
+  const projects = await Project.find(req.query);
   res.status(200).json({
     status: "success",
     data: {
@@ -16,7 +17,16 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
   });
 });
 exports.addProject = catchAsync(async (req, res, next) => {
-  const projectData = filterObject(req.body, "name", "supervisor", "members");
+  const projectData = filterObject(
+    req.body,
+    "name",
+    "supervisor",
+    "members",
+    "year",
+    "semester",
+    "submissionDate",
+    "description"
+  );
   if (projectData.supervisor) {
     const supervisor = await User.findById(projectData.supervisor);
     if (!supervisor) return next(new AppError(400, "supervisor doesnot exist"));
@@ -69,6 +79,7 @@ exports.deleteProject = catchAsync(async (req, res, next) => {
     return await Room.findByIdAndDelete(room);
   });
   await Promise.all(deleteRoomsPromises);
+  await GanttChart.findByIdAndDelete(project.ganttChart);
   await Project.findByIdAndDelete(id);
   res.status(204).json({
     status: "success",
@@ -220,7 +231,6 @@ exports.getProjectRooms = catchAsync(async (req, res, next) => {
   rooms.forEach((room) => {
     room.members.forEach((member) => {
       if (member._id.toString() === req.user.id) finalRooms.push(room);
-      //comapring not done
     });
   });
   if (finalRooms.length === 0)
@@ -230,6 +240,26 @@ exports.getProjectRooms = catchAsync(async (req, res, next) => {
     total: finalRooms.length,
     data: {
       rooms: finalRooms,
+    },
+  });
+});
+
+exports.getProjectGanttChart = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const project = await Project.findById(id);
+  if (!project) return next(new AppError(404, "no room with that id"));
+  if (!project.ganttChart) {
+    return res.status(307).json({
+      status: "failed",
+      message: "gantt chart is not complete",
+    });
+  }
+  const ganttChart = await GanttChart.findById(project.ganttChart);
+  if (!ganttChart) return next(new AppError(404, "cannot find the ganttchart"));
+  res.status(200).json({
+    status: "success",
+    data: {
+      ganttChart,
     },
   });
 });

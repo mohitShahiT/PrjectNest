@@ -23,7 +23,6 @@ exports.addProject = catchAsync(async (req, res, next) => {
     "name",
     "supervisor",
     "members",
-    "year",
     "semester",
     "submissionDate",
     "description"

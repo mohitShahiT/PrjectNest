@@ -6,6 +6,10 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   if (req.query.role) {
     query.role = req.query.role;
   }
+  if (req.query.email) {
+    const emailRegx = new RegExp(req.query.email, "i");
+    query.email = emailRegx;
+  }
   const users = await User.find(query);
   res.status(200).json({
     status: "success",

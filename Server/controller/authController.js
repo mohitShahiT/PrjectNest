@@ -1,10 +1,12 @@
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const User = require("../model/userModel");
 const filterObject = require("../utils/filterObject");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const roles = require("../utils/userRoles");
+const Project = require("../model/projectModel");
 
 const signJWT = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -166,4 +168,25 @@ exports.assignRole = catchAsync(async (req, res, next) => {
       user,
     },
   });
+});
+
+exports.projectMemberRestricted = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const project = await Project.findById(id);
+  if (!project) return next(new AppError(400, "no project with that id"));
+  if (
+    !(
+      req.user.id === project.supervisor._id.toString() ||
+      project.members.includes(req.user.id)
+    )
+  ) {
+    return next(
+      new AppError(
+        401,
+        "you are not the member of this project so you cannot perform this action"
+      )
+    );
+  }
+  req.project = project;
+  next();
 });

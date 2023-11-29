@@ -2,16 +2,13 @@ const mongoose = require("mongoose");
 
 const ganttChartSchema = new mongoose.Schema(
   {
-    totalWeeks: Number,
+    totalWeeks: {
+      type: Number,
+    },
     weeks: [
       {
-        weekNo: {
-          type: Number,
-          //   unique: [true, "week no must me unique"],
-        },
-        from: Date,
-        to: Date,
-        tasksToDo: [String],
+        type: mongoose.Schema.ObjectId,
+        ref: "Week",
       },
     ],
     tasks: [String],

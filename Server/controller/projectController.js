@@ -5,6 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const filterObject = require("../utils/filterObject");
 const GanttChart = require("../model/ganttChartModel");
+const Week = require("../model/weekModel");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
   const projects = await Project.find(req.query);
@@ -27,6 +28,11 @@ exports.addProject = catchAsync(async (req, res, next) => {
     "submissionDate",
     "description"
   );
+  if (projectData.submissionDate) {
+    const diff = new Date().getTime() - new Date(projectData.submissionDate);
+    if (diff > 0)
+      return next(new AppError(400, "submission date is in the past"));
+  }
   if (projectData.supervisor) {
     const supervisor = await User.findById(projectData.supervisor);
     if (!supervisor) return next(new AppError(400, "supervisor doesnot exist"));
@@ -245,21 +251,58 @@ exports.getProjectRooms = catchAsync(async (req, res, next) => {
 });
 
 exports.getProjectGanttChart = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const project = await Project.findById(id);
-  if (!project) return next(new AppError(404, "no room with that id"));
-  if (!project.ganttChart) {
+  if (!req.project.ganttChart) {
     return res.status(307).json({
       status: "failed",
-      message: "gantt chart is not complete",
+      message:
+        "this project does not have a gantt chart yet, please send a post request to api/v1/project/{project_id}/gantt-chart to create one",
     });
   }
-  const ganttChart = await GanttChart.findById(project.ganttChart);
+  const ganttChart = await GanttChart.findById(req.project.ganttChart).populate(
+    "weeks"
+  );
   if (!ganttChart) return next(new AppError(404, "cannot find the ganttchart"));
   res.status(200).json({
     status: "success",
     data: {
       ganttChart,
     },
+  });
+});
+
+exports.addProjectGanttChart = catchAsync(async (req, res, next) => {
+  if (req.project.ganttChart)
+    return next(new AppError(400, "this project already has a gantt chart"));
+  if (req.user.id === req.project.supervisor._id.toString())
+    return next(
+      new AppError(400, "only project memberes(student) can add gantt chart")
+    );
+  const weekNos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const weeksPromises = weekNos.map(async (weekno) => {
+    return await Week.create({
+      weekNo: weekno,
+      from:
+        new Date(req.project.createdAt).getTime() + (weekno - 1) * 604800000, //1week = 604800000 ms
+      to:
+        new Date(req.project.createdAt).getTime() +
+        (weekno - 1) * 604800000 +
+        6 * 24 * 60 * 60 * 1000,
+      taskToDo: [],
+    });
+  });
+  const weeks = await Promise.all(weeksPromises);
+
+  const ganttChartData = {
+    totalWeeks: weeks.length,
+    weeks,
+  };
+  console.log(ganttChartData);
+  const ganttChart = await GanttChart.create(ganttChartData);
+  const project = await Project.findById(req.project.id);
+  project.ganttChart = ganttChart.id;
+  await project.save();
+  res.status(200).json({
+    status: "waiting",
+    project,
   });
 });

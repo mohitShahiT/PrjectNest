@@ -14,15 +14,25 @@ io.on("connection", (socket) => {
   console.log(socket);
 });
 
+const mongoURI =
+  process.env.NODE_ENV === "development"
+    ? process.env.MONGODB_LOCAL_URI
+    : process.env.MONGODB_CLOUD_URI.replace(
+        "<password>",
+        process.env.MONGODB_CLOUD_PASSWORD
+      );
+
 const mongoLocalURI = process.env.MONGODB_LOCAL_URI;
 const mongoCloudURI = process.env.MONGODB_CLOUD_URI.replace(
   "<password>",
   process.env.MONGODB_CLOUD_PASSWORD
 );
 mongoose
-  .connect(mongoLocalURI)
-  .then(() => {
-    console.log("connected to the database...");
+  .connect(mongoURI)
+  .then((conInstance) => {
+    console.log(
+      `connected to the database..., DB Hosted By: ${conInstance.connection.host}`
+    );
   })
   .catch((err) => {
     console.log("database connection faled...", err);

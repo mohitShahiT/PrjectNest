@@ -1,7 +1,7 @@
 const express = require("express");
 const authController = require("../controller/authController");
 const projectController = require("../controller/projectController");
-const roomController = require("../controller/roomController");
+const ganttChartController = require("../controller/ganttChartController");
 const router = express.Router();
 
 router
@@ -59,10 +59,25 @@ router.route("/:id/rooms").get(
   projectController.getProjectRooms
 );
 
-router.route("/:id/gantt-chart").get(
-  authController.protect,
-  // authController.restrictTo("student", "supervisor"),
-  projectController.getProjectGanttChart
-);
+router
+  .route("/:id/gantt-chart")
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectGanttChart
+  )
+  .post(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.addProjectGanttChart
+  );
+
+router
+  .route("/:id/gantt-chart/add-task")
+  .post(
+    authController.protect,
+    authController.projectMemberRestricted,
+    ganttChartController.addGanttChartTask
+  );
 
 module.exports = router;

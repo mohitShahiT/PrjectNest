@@ -56,6 +56,9 @@ const projectSchema = new mongoose.Schema(
     submissionDate: {
       type: Date,
     },
+    startDate: {
+      type: Date,
+    },
     ganttChart: {
       type: mongoose.Schema.ObjectId,
       ref: "GanttChart",
@@ -67,15 +70,6 @@ const projectSchema = new mongoose.Schema(
 //creating rooms for the project
 projectSchema.pre("save", async function (next) {
   if (!this.isNew) return next();
-
-  //inserting gantt chart
-  const ganttChartData = {
-    weeks: [],
-    totalWeeks: 0,
-    tasks: [],
-  };
-  const ganttChart = await GanttChart.create(ganttChartData);
-  this.ganttChart = ganttChart._id;
 
   //inserting rooms
   const members = this.members.map((mem) => mem);

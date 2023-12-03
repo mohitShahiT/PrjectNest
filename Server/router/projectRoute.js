@@ -73,11 +73,23 @@ router
   );
 
 router
-  .route("/:id/gantt-chart/add-task")
+  .route("/:id/gantt-chart/:weekNo/add-task")
   .post(
     authController.protect,
     authController.projectMemberRestricted,
     ganttChartController.addGanttChartTask
   );
 
+router
+  .route("/:id/log-sheet/:date")
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectLogSheet
+  )
+  .post(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.addProjectLogSheet
+  );
 module.exports = router;

@@ -6,13 +6,24 @@ const AppError = require("../utils/appError");
 const filterObject = require("../utils/filterObject");
 const GanttChart = require("../model/ganttChartModel");
 const Week = require("../model/weekModel");
+const Log = require("../model/logModel");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
   let query = {};
   if (req.query.name) {
     query.name = new RegExp(req.query.name, "i");
   }
-  const projects = await Project.find(query);
+  const projects = await Project.find(query)
+    .populate({
+      path: "supervisor",
+      model: "User",
+      select: "firstName lastName email photo",
+    })
+    .populate({
+      path: "members",
+      model: "User",
+      select: "firstName lastName email photo",
+    });
   res.status(200).json({
     status: "success",
     data: {
@@ -70,7 +81,17 @@ exports.addProject = catchAsync(async (req, res, next) => {
 
 exports.getProject = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const project = await Project.findById(id);
+  const project = await Project.findById(id)
+    .populate({
+      path: "supervisor",
+      model: "User",
+      select: "firstName lastName email photo",
+    })
+    .populate({
+      path: "members",
+      model: "User",
+      select: "firstName lastName email photo",
+    });
   if (!project) return next(new AppError(404, "project not found"));
   res.status(200).json({
     status: "success",
@@ -359,7 +380,28 @@ exports.addProjectLogSheet = catchAsync(async (req, res, next) => {
   if (isNaN(validDate.getTime()))
     return next(new AppError(400, "invalid date, date format: 'YYYY-MM-DD'"));
 
+  const project = await Project.findById(req.project);
+  project.logSheets.forEach((ls) => {
+    if (ls.active) {
+      return next(
+        new AppError(
+          400,
+          `there is already an active logsheet(${ls.date}), submit that logsheet to make a new one`
+        )
+      );
+    }
+  });
+  const { entries } = req.body;
+  if (!entries) return next(new AppError(400, "please provide data in body"));
+  const log = await Log.create({ entries });
   const logSheetData = {
     date: validDate,
+    log,
   };
+  project.logSheets.push(logSheetData);
+  await project.save();
+  res.status(200).json({
+    status: "success",
+    logSheets: project.logSheets,
+  });
 });

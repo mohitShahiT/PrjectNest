@@ -74,6 +74,10 @@ const projectSchema = new mongoose.Schema(
           type: mongoose.Schema.ObjectId,
           ref: "Log",
         },
+        active: {
+          type: Boolean,
+          default: true,
+        },
       },
     ],
   },

@@ -3,11 +3,11 @@ const userController = require("../controller/userController");
 const authController = require("../controller/authController");
 const router = express.Router();
 
-router.route("/").get(userController.getAllUsers);
+router.route("/").get(authController.protect, userController.getAllUsers);
 router
   .route("/update-my-password")
   .post(authController.protect, authController.updateMyPassword);
-router.route("/:id").get(userController.getUser);
+router.route("/:id").get(authController.protect, userController.getUser);
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
 

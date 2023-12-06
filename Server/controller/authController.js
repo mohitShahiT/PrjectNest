@@ -41,7 +41,6 @@ exports.restrictTo = (...roles) => {
   // this returned function will have access to roles array due to closure property of js functions
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      console.log(req.user.role);
       return next(
         new AppError(403, "you do not have permission to perform this action")
       );

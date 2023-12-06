@@ -29,6 +29,7 @@ const projectSchema = new mongoose.Schema(
       },
       message: "{VALUE} is not a valid semster number",
     },
+
     description: {
       type: String,
     },
@@ -63,6 +64,18 @@ const projectSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "GanttChart",
     },
+    logSheets: [
+      {
+        date: {
+          type: Date,
+          required: [true, "date is required"],
+        },
+        log: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Log",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

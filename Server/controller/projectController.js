@@ -8,7 +8,11 @@ const GanttChart = require("../model/ganttChartModel");
 const Week = require("../model/weekModel");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
-  const projects = await Project.find(req.query);
+  let query = {};
+  if (req.query.name) {
+    query.name = new RegExp(req.query.name, "i");
+  }
+  const projects = await Project.find(query);
   res.status(200).json({
     status: "success",
     data: {
@@ -83,6 +87,15 @@ exports.deleteProject = catchAsync(async (req, res, next) => {
   const deleteRoomsPromises = project.rooms.map(async (room) => {
     return await Room.findByIdAndDelete(room);
   });
+  if (project.ganttChart) {
+    const ganttChart = await GanttChart.findById(project.ganttChart);
+    await Promise.all(
+      ganttChart.weeks.map(async (week) => {
+        return await Week.findByIdAndDelete(week);
+      })
+    );
+    await GanttChart.findByIdAndDelete(project.ganttChart);
+  }
   await Promise.all(deleteRoomsPromises);
   await GanttChart.findByIdAndDelete(project.ganttChart);
   await Project.findByIdAndDelete(id);
@@ -232,7 +245,6 @@ exports.getProjectRooms = catchAsync(async (req, res, next) => {
   });
   const rooms = await Promise.all(roomsPromises);
   const finalRooms = [];
-  console.log(req.user.firstName, req.user.role);
   rooms.forEach((room) => {
     room.members.forEach((member) => {
       if (member._id.toString() === req.user.id) finalRooms.push(room);
@@ -257,9 +269,16 @@ exports.getProjectGanttChart = catchAsync(async (req, res, next) => {
         "this project does not have a gantt chart yet, please send a post request to api/v1/project/{project_id}/gantt-chart to create one",
     });
   }
-  const ganttChart = await GanttChart.findById(req.project.ganttChart).populate(
-    "weeks"
-  );
+  const ganttChart = await GanttChart.findById(req.project.ganttChart)
+    .populate({
+      path: "weeks.week",
+      model: "Week",
+    })
+    .populate({
+      path: "lastUpdatedBy",
+      model: "User",
+      select: "_id firstName email",
+    });
   if (!ganttChart) return next(new AppError(404, "cannot find the ganttchart"));
   res.status(200).json({
     status: "success",
@@ -277,31 +296,72 @@ exports.addProjectGanttChart = catchAsync(async (req, res, next) => {
       new AppError(400, "only project memberes(student) can add gantt chart")
     );
   const weekNos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const weeksPromises = weekNos.map(async (weekno) => {
-    return await Week.create({
-      weekNo: weekno,
-      from:
-        new Date(req.project.createdAt).getTime() + (weekno - 1) * 604800000, //1week = 604800000 ms
-      to:
-        new Date(req.project.createdAt).getTime() +
-        (weekno - 1) * 604800000 +
-        6 * 24 * 60 * 60 * 1000,
-      taskToDo: [],
-    });
+  const weeks = await Promise.all(
+    weekNos.map(async (weekno) => {
+      return await Week.create({
+        from:
+          new Date(req.project.createdAt).getTime() + (weekno - 1) * 604800000, //1week = 604800000 ms
+        to:
+          new Date(req.project.createdAt).getTime() +
+          (weekno - 1) * 604800000 +
+          6 * 24 * 60 * 60 * 1000,
+        taskToDo: [],
+      });
+    })
+  );
+  const newWeeks = weeks.map((wk, i) => {
+    return {
+      weekNo: i + 1,
+      week: wk._id,
+    };
   });
-  const weeks = await Promise.all(weeksPromises);
 
+  // return res.status(200).json({});
   const ganttChartData = {
-    totalWeeks: weeks.length,
-    weeks,
+    totalWeeks: weekNos.length,
+    weeks: newWeeks,
   };
-  console.log(ganttChartData);
   const ganttChart = await GanttChart.create(ganttChartData);
+  await ganttChart.populate({
+    path: "weeks.week",
+    model: "Week",
+  });
+  await projectGanttChart.populate({
+    path: "lastUpdatedBy",
+    model: "User",
+    select: "_id email firstName",
+  });
   const project = await Project.findById(req.project.id);
   project.ganttChart = ganttChart.id;
   await project.save();
   res.status(200).json({
-    status: "waiting",
-    project,
+    status: "success",
+    ganttchart: ganttChart,
   });
+});
+
+exports.getProjectLogSheet = catchAsync(async (req, res, next) => {
+  const { date } = req.params;
+  const logSheet = req.project.logSheets.find((ls) => ls.date === date);
+  if (!logSheet)
+    return next(new AppError(400, "no logsheet found with that date"));
+
+  res.status(200).json({
+    status: "success",
+    logSheet,
+  });
+});
+
+exports.addProjectLogSheet = catchAsync(async (req, res, next) => {
+  const { date } = req.params;
+  date.replace("-", "/");
+  console.log(date);
+  const validDate = new Date(date);
+  console.log(validDate);
+  if (!validDate)
+    return next(new AppError(400, "invalid date, date format: 'YYYY-MM-DD'"));
+
+  const logSheetData = {
+    date: validDate,
+  };
 });

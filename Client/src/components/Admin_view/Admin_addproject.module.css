@@ -1,0 +1,119 @@
+.admin_addproject {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+}
+.adminprojectcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--appcolor);
+}
+
+.addmessage,
+.addicon {
+  font-size: large;
+  color: white;
+}
+
+.projectform {
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+  align-items: center;
+}
+.formcontent {
+  border-radius: 10px;
+}
+.projectdetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32rem;
+  height: 35rem;
+  border-radius: 3px;
+  justify-content: space-around;
+  background-color: var(--appcolor);
+  border: 2px solid burlywood;
+}
+.inputboxes {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.inputlabel {
+  width: 8rem;
+  margin-left: 8px;
+}
+.inputaddproject input[type="text"],
+.inputaddproject input[type="date"] {
+  color: rgb(65, 37, 37);
+  background-color: azure;
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.addformheading {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 23px;
+  color: white;
+}
+.inputboxes {
+  color: white;
+  /* background-color: #032f61; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 30rem;
+  height: 6rem;
+  gap: 15px;
+}
+.inputlabel {
+  margin-right: 5px;
+}
+
+.cross {
+  cursor: pointer;
+  width: 100%;
+  text-align: end;
+  margin-right: 1rem;
+  border: none;
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+}
+
+.inputtext {
+  height: 2rem;
+  width: 15rem;
+  padding: 10px;
+}
+.inputtext::placeholder {
+  padding: 3px;
+}
+
+.searchBox {
+  border: none;
+  font-size: 10px;
+  min-height: 50px;
+}
+.supervisor,
+.studentsemester {
+  height: 2rem;
+  width: 15rem;
+}
+.defaultoption {
+  display: none;
+}
+.multiselect {
+  width: 15rem;
+  color: black;
+}

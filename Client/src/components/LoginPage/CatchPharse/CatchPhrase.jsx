@@ -2,7 +2,7 @@ import styles from "./CatchPhrase.module.css";
 const CatchPhrase = () => {
   return (
     <>
-      <span className={` ${styles.text} ${styles.subheading}`}>
+      <span className={` ${styles.text} ${styles.subheading} ${styles.span}`}>
         Manage Your Project Conveniently Like Never Before
       </span>
       <div className={styles.join_message}>

@@ -1,0 +1,16 @@
+.accountsection {
+  margin-right: 10px;
+  display: flex;
+  align-items: flex-end;
+  color: rgb(192, 192, 192);
+  padding-right: 10px;
+}
+
+img {
+  border-radius: 50%;
+  height: 45px;
+}
+
+.profilephoto {
+  border-radius: 50%;
+}

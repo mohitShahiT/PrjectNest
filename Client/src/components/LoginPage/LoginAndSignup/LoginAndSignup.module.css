@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   /* background-color: rgb(255, 255, 255); */
-  color: white;
+  /* color: white; */
 }
 
 .blur {
@@ -43,6 +43,7 @@
 .login {
   margin-top: 40px;
   width: 60%;
+  color: white;
 }
 .createaccount {
   height: 2.5rem;

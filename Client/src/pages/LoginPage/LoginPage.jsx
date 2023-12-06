@@ -1,7 +1,10 @@
 import { useState } from "react";
-import HomeLogo from "../components/LoginPage/HomeLogo";
-import LoginAndSignup from "../components/LoginPage/LoginAndSignup";
+
+// import LoginAndSignup from "../../components/LoginPage/LoginAndSignup";
 import styles from "./LoginPage.module.css";
+import HomeLogo from "../../components/LoginPage/HomeLogo/HomeLogo";
+import LoginAndSignup from "../../components/LoginPage/LoginAndSignup/LoginAndSignup";
+
 const LoginPage = () => {
   const [clicked, setClicked] = useState(false);
   const [signin, setSignin] = useState(false);

@@ -21,7 +21,6 @@ const Signupform = ({ clicked, handleClick }) => {
     confirmPassword: "",
   };
 
-  const [role, setRole] = useState("Student");
   const inputs = [
     {
       id: 1,
@@ -81,7 +80,7 @@ const Signupform = ({ clicked, handleClick }) => {
       pattern: values.password,
     },
   ];
-  console.log(role);
+
   function handlecross() {
     setValues(initialValues);
 
@@ -142,7 +141,7 @@ const Signupform = ({ clicked, handleClick }) => {
     <div className={clicked ? `${styles.Signupform}` : `${styles.hidden}`}>
       <div className={styles.Signupform_quit}>
         <button className={styles.cross} onClick={handlecross}>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
             &#10006;
           </Link>
         </button>
@@ -161,13 +160,6 @@ const Signupform = ({ clicked, handleClick }) => {
             placeholder={input.placeholder}
           />
         ))}
-        <div className={styles.role}>
-          Role:
-          <select onChange={(e) => setRole(e.target.value)}>
-            <option value={"Student"}>Student</option>
-            <option value={"Teacher"}>Teacher</option>
-          </select>
-        </div>
 
         <div className={styles.submit}>
           <input type="submit" onClick={() => handleSubmit}></input>
@@ -193,6 +185,7 @@ function InputItem(props) {
         required={props.required}
         pattern={props.pattern}
         onBlur={handlefocus}
+        className={styles.inputs}
         focused={focused.toString()}
       />
       <p className={styles.errorsection}>{props.error}</p>

@@ -1,38 +1,47 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./SignInform.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import LoggedIn from "../../pages/LoggedIn";
+import LoggedIn from "../../../pages/AdminPage/AdminPage";
+import axios from "axios";
+
 
 const SignInform = ({ clicked, handleClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState({ auth: false, name: "" });
+  const [errors, setErrors] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:8000/api/v1/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/JSON",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+    console.log(email, password);
+
+    axios
+      .post("http://localhost:8000/api/v1/user/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res.data.token);
+        localStorage.setItem("jwtToken", res.data.token);
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer" + res.data.token;
+        setUser({ auth: true, name: res.data.data.user.email });
+        if (res.data.data.user.role === "admin") {
+          console.log("decoding Ravi");
+          navigate("/admin");
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) setErrors("Invalid credentials");
+          else setErrors("Please try again.");
+
+          navigate("/");
+          alert("Invalid Email or Password");
+        }
+        console.log(err);
       });
-      const data = await response.json();
-      console.log(data);
-      if (data.status === "success") {
-        navigate("/home");
-      } else {
-        navigate("/");
-        alert("Invalid Email or Password");
-        handleClick(!clicked);
-      }
-    } catch (error) {
-      alert(error);
-    }
 
     // handleClick(!clicked);
   }
@@ -47,7 +56,7 @@ const SignInform = ({ clicked, handleClick }) => {
     <div className={clicked ? `${styles.SignInform}` : `${styles.hidden}`}>
       <div className={styles.SignInform_quit}>
         <button className={styles.cross} onClick={handlecross}>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
+          <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
             {" "}
             &#10006;
           </Link>
@@ -83,6 +92,7 @@ function InputItem(props) {
         type={props.type}
         value={props.value}
         placeholder={props.placeholder}
+        className={styles.inputfields}
         onChange={(e) => props.onChange(e.target.value)}
       />
     </div>

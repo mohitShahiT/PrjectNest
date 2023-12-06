@@ -11,9 +11,7 @@
   width: 45vw;
   border-radius: 4%;
 }
-input[type="text"],
-input[type="password"],
-input[type="email"] {
+.inputs {
   width: 50%;
   height: 3rem;
   padding: 15px;
@@ -28,7 +26,6 @@ input[type="email"] {
 .submit {
   width: 100%;
   text-align: center;
-  margin-top: 2px;
 }
 
 input[type="submit"] {
@@ -62,15 +59,13 @@ form {
 .inputbox {
   display: flex;
   flex-direction: column;
-  padding: 1%;
+  padding: 0.8%;
   /* text-align: center; */
 
   align-items: center;
 }
 
-input[type="text"]::placeholder,
-input[type="email"]::placeholder,
-input[type="password"]::placeholder {
+.inputs::placeholder {
   color: rgb(170, 163, 163);
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
@@ -114,34 +109,4 @@ h1 {
 
 input:invalid[focused="true"] ~ p {
   visibility: visible;
-}
-
-.role {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: azure;
-  border: none;
-  height: 2rem;
-  width: inherit;
-  margin-bottom: 2rem;
-  margin-top: 1rem;
-}
-
-select {
-  border-radius: 3px;
-  height: 100%;
-  color: black;
-  margin-left: 2rem;
-  width: 200px;
-  border-color: transparent;
-}
-option {
-  color: black;
-}
-div p {
-  font-size: 20px;
-  font-family: "Times New Roman", Times, serif;
-  height: 10px;
-  color: azure;
 }

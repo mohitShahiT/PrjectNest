@@ -355,10 +355,8 @@ exports.getProjectLogSheet = catchAsync(async (req, res, next) => {
 exports.addProjectLogSheet = catchAsync(async (req, res, next) => {
   const { date } = req.params;
   date.replace("-", "/");
-  console.log(date);
   const validDate = new Date(date);
-  console.log(validDate);
-  if (!validDate)
+  if (isNaN(validDate.getTime()))
     return next(new AppError(400, "invalid date, date format: 'YYYY-MM-DD'"));
 
   const logSheetData = {

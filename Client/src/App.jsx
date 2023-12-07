@@ -1,11 +1,11 @@
-
 import "./App.css";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import Errorpage from "./pages/Errrorpage/Errorpage";
 import Adminaddproject from "./pages/Adminaddproject/Adminaddproject";
 import Admineditproject from "./pages/Admineditproject/Admineditproject";
+import AdmineditSelectedproject from "./pages/Admineditproject/AdmineditSelectedproject";
 
 function App() {
   return (
@@ -17,7 +17,11 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="admin" element={<AdminPage />}>
             <Route path="addproject" element={<Adminaddproject />} />
-            <Route path="editproject" element={<Admineditproject />} />
+            <Route path="editproject" element={<Admineditproject />}></Route>
+            <Route
+              path="editproject/:id"
+              element={<AdmineditSelectedproject />}
+            />
           </Route>
           <Route path="*" element={<Errorpage />} />
         </Routes>

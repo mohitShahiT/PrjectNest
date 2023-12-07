@@ -1,9 +1,38 @@
 .adminprojectcontainer {
   width: 100%;
+  background-color: #131a22;
+}
+.projectsemester{
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+}
+.edit_project {
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.project_card {
+  background-color: white;
+  color: black;
+  margin: 20px;
+  height: 20rem;
+  width: 20rem;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
+  
+}
+.project_title {
+  text-align: center;
+  text-decoration: underline;
+}
+.prow {
+  width: 16rem;
+}
+.labels {
+  padding-right: 5px;
 }

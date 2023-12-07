@@ -4,7 +4,7 @@ import { IoAddSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import AsyncSelect from "react-select/async";
 import { debounce } from "lodash";
-
+import axios from "axios";
 
 function AddProject() {
   const [addProject, setAddProject] = useState(false);
@@ -18,16 +18,15 @@ function AddProject() {
     try {
       const link = `http://localhost:8000/api/v1/user/?email=${searchValue}&role=student`;
 
-      const response = await fetch(link, {
-        method: "GET",
+      const response = await axios.get(link, {
         headers: {
-          "Content-Type": "application/JSON",
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
         },
       });
-      const data = await response.json();
-      console.log(data);
-      if (data.status === "success") {
-        const newOptions = data.data.users.map((user) => {
+     
+     
+      if (response.data.status === "success") {
+        const newOptions = response.data.data.users.map((user) => {
           return {
             label: user.email,
             value: user._id,
@@ -50,16 +49,22 @@ function AddProject() {
     try {
       const link = `http://localhost:8000/api/v1/user/?email=${searchValue}&role=supervisor`;
 
-      const response = await fetch(link, {
-        method: "GET",
+      // const response = await fetch(link, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/JSON",
+      //   },
+      // });
+      const response = await axios.get(link, {
         headers: {
-          "Content-Type": "application/JSON",
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
         },
       });
-      const data = await response.json();
-      console.log(data);
-      if (data.status === "success") {
-        const newOptions = data.data.users.map((user) => {
+
+      console.log(response);
+
+      if (response.data.status === "success") {
+        const newOptions = response.data.data.users.map((user) => {
           return {
             label: user.email,
             value: user._id,
@@ -166,23 +171,25 @@ function AddProject() {
     e.preventDefault();
     const { ProjectTitle, Semester, SubmissionDate } = values;
 
-    const response = await fetch(`http://localhost:8000/api/v1/project`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const response = await axios.post(
+      "http://localhost:8000/api/v1/project",
+      {
         name: ProjectTitle,
-        semester: parseInt(Semester),
+        semester: parseInt(Semester, 10), // Parse to integer
         submissionDate: SubmissionDate,
         supervisor,
         members,
-      }),
-    });
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+        },
+      }
+    );
 
-    const data = await response.json();
+    const data = response;
     console.log(data);
-    if (data.status === "success") {
+    if (data.data.status === "success") {
       const message = "Submitted";
       setSupervisor("");
       setMembers([]);

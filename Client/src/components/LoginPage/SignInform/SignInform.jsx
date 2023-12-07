@@ -78,7 +78,7 @@ const SignInform = ({ clicked, handleClick }) => {
         />
 
         <div className={styles.submit}>
-          <input type="submit"></input>
+          <input type="submit" className={styles.submitbtn}></input>
         </div>
       </form>
     </div>

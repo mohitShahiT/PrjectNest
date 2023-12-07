@@ -162,7 +162,7 @@ const Signupform = ({ clicked, handleClick }) => {
         ))}
 
         <div className={styles.submit}>
-          <input type="submit" onClick={() => handleSubmit}></input>
+          <input type="submit" className={styles.submitbtn} onClick={() => handleSubmit }></input>
         </div>
       </form>
     </div>

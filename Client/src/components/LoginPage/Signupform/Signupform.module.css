@@ -28,8 +28,9 @@
   text-align: center;
 }
 
-input[type="submit"] {
+.submitbtn {
   padding: 0px;
+  height: 2rem;
   width: 30%;
   color: black;
   cursor: pointer;
@@ -42,7 +43,7 @@ input[type="submit"] {
   border: none;
   color: rgb(255, 254, 254);
 }
-input[type="submit"]:hover {
+.submitbtn:hover {
   background-color: #032e3f;
 
   transition-duration: 1s;

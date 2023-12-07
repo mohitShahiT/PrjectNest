@@ -32,6 +32,32 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getProjectMembers = catchAsync(async (req, res, next) => {
+  const { members } = await Project.findById(req.project).populate({
+    path: "supervisor",
+    model: "User",
+    select: "firstName lastName email photo",
+  });
+  res.status(200).json({
+    status: "success",
+    total: members.length,
+    members,
+  });
+});
+
+exports.getProjectSupervisor = catchAsync(async (req, res, next) => {
+  const { supervisor } = await Project.findById(req.project).populate({
+    path: "supervisor",
+    model: "User",
+    select: "firstName lastName email photo",
+  });
+  res.status(200).json({
+    status: "success",
+    supervisor,
+  });
+});
+
 exports.addProject = catchAsync(async (req, res, next) => {
   const projectData = filterObject(
     req.body,
@@ -361,11 +387,39 @@ exports.addProjectGanttChart = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getProjectLogSheets = catchAsync(async (req, res, next) => {
+  const { logSheets } = await Project.findById(req.project)
+    .select("logSheets")
+    .populate({
+      path: "logSheets.log",
+      model: "Log",
+    });
+  res.status(200).json({
+    status: "success",
+    total: logSheets.length,
+    logSheets,
+  });
+});
+
 exports.getProjectLogSheet = catchAsync(async (req, res, next) => {
   const { date } = req.params;
-  const logSheet = req.project.logSheets.find((ls) => ls.date === date);
+  const { logSheets } = await Project.findById(req.project)
+    .select("logSheets")
+    .populate({
+      path: "logSheets.log",
+      model: "Log",
+    });
+
+  const logSheet = logSheets.find(
+    (ls) => new Date(ls.date).getTime() === new Date(date).getTime()
+  );
   if (!logSheet)
     return next(new AppError(400, "no logsheet found with that date"));
+  // const ls = await Log.findById(logSheet.log).populate({
+  //   path: "entries.assignedTo",
+  //   model: "User",
+  //   select: "firstName lastName email",
+  // });
 
   res.status(200).json({
     status: "success",
@@ -381,16 +435,22 @@ exports.addProjectLogSheet = catchAsync(async (req, res, next) => {
     return next(new AppError(400, "invalid date, date format: 'YYYY-MM-DD'"));
 
   const project = await Project.findById(req.project);
-  project.logSheets.forEach((ls) => {
-    if (ls.active) {
-      return next(
-        new AppError(
-          400,
-          `there is already an active logsheet(${ls.date}), submit that logsheet to make a new one`
-        )
-      );
-    }
-  });
+  let index = 0;
+  if (
+    project.logSheets.some((ls, i) => {
+      index = i;
+      return ls.active;
+    })
+  ) {
+    return next(
+      new AppError(
+        400,
+        `there is already an active logsheet(${
+          new Date(project.logSheets[index].date).toISOString().split("T")[0]
+        }), submit that logsheet to make a new one`
+      )
+    );
+  }
   const { entries } = req.body;
   if (!entries) return next(new AppError(400, "please provide data in body"));
   const log = await Log.create({ entries });
@@ -403,5 +463,45 @@ exports.addProjectLogSheet = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     logSheets: project.logSheets,
+  });
+});
+
+exports.submitProjectLogSheet = catchAsync(async (req, res, next) => {
+  const { date } = req.params;
+  const project = await Project.findById(req.project)
+    .select("logSheets")
+    .populate({
+      path: "logSheets.log",
+      model: "Log",
+    });
+  let index = -1;
+
+  const logSheet = project.logSheets.find((ls, i) => {
+    index = i;
+    return new Date(ls.date).getTime() === new Date(date).getTime();
+  });
+  if (!logSheet)
+    return next(new AppError(400, "no logsheet found with that date"));
+  if (!logSheet.active) {
+    return next(new AppError(400, "this logsheet is already submitted"));
+  }
+
+  logSheet.log.entries.forEach((entry) => {
+    const newEnt = req.body.entries.find(
+      (ent) => ent.assignedTo === entry._id.toString()
+    );
+    if (newEnt) {
+      entry.completedTasks = newEnt.completedTasks;
+      entry.present = newEnt.present;
+    }
+  });
+  // project.logSheets[index] = logSheet;
+  project.logSheets[index].active = false;
+  await project.logSheets[index].log.save();
+  await project.save();
+
+  res.status(200).json({
+    status: "success",
+    data: project.logSheets,
   });
 });

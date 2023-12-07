@@ -24,6 +24,22 @@ router
   );
 
 router
+  .route("/:id/members")
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectMembers
+  );
+
+router
+  .route("/:id/supervisor")
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectSupervisor
+  );
+
+router
   .route("/:id/add-members")
   .patch(
     authController.protect,
@@ -92,4 +108,21 @@ router
     authController.projectMemberRestricted,
     projectController.addProjectLogSheet
   );
+
+router
+  .route("/:id/log-sheet/:date/submit")
+  .post(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.submitProjectLogSheet
+  );
+
+router
+  .route("/:id/log-sheet")
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectLogSheets
+  );
+
 module.exports = router;

@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-key */
 import axios from "axios";
 import styles from "./Admin_editproject.module.css";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { MdEditDocument } from "react-icons/md";
 
 function EditProject() {
   const [projects, setProjects] = useState([]);
@@ -15,13 +17,18 @@ function EditProject() {
     <div className={styles.adminprojectcontainer}>
       <div className={styles.edit_project}>
         {projects.map((project) => (
-          <Link to={`/admin/editproject/${project._id}`}>
-            <div className={styles.project_card}>
+          <div className={styles.project_card}>
+            <div className={styles.projectCardHeader}>
               <h3 className={styles.project_title}>{project.name}</h3>
+              <Link to={`/admin/editproject/${project._id}`}>
+              <MdEditDocument />
+              </Link>
+            </div>
+              
               <div className={styles.projectsemester}>
                 <p className={styles.prow}>
                   <span className={styles.labels}>Project Members:</span>
-                  {project.members.map((member) => `${member.firstName},`)}
+                  {project.members.map((member, i, arr) => i+1===arr.length?`${member.firstName}`:`${member.firstName}, `)}
                 </p>
                 <p className={styles.prow}>
                   {" "}
@@ -42,7 +49,6 @@ function EditProject() {
                 </p>
               </div>
             </div>
-          </Link>
         ))}
       </div>
     </div>

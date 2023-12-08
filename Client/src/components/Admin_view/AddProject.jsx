@@ -271,7 +271,9 @@ function Inputs({
                   loadOptions={loadOptions2}
                   className={styles.multiselect}
                   onChange={handleChangeSelect}
+                  placeholder={"Select Supervisor"}
                   required
+                
                 />
               </>
             ) : (
@@ -303,6 +305,7 @@ function Inputs({
             isMulti
             className={styles.multiselect}
             onChange={handleChangeMultiSelect}
+            placeholder={"Select Team Members"}
             required
           />
         ) : (

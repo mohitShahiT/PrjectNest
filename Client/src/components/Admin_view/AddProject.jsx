@@ -129,7 +129,7 @@ function AddProject() {
     {
       id: 5,
       name: "SubmissionDate",
-      label: "Submission Date",
+      label: "Submission",
       placeholder: "Choose a Supervisor",
       type: "date",
       error: "Choose a Supervisor",
@@ -216,17 +216,16 @@ function AddProject() {
       ) : (
         <div className={styles.projectform}>
           <div className={styles.formcontent}>
+              <div
+                className={styles.cross}
+              >
+                <MdClose className={styles.crossBtn} onClick={() => handlequit({ setAddProject, addProject })} />
+              </div>
+              <h2 className={styles.addformheading}>Add Project Info</h2>
             <form
               className={styles.projectdetails}
               onSubmit={(e) => handleSubmit(e)}
             >
-              <div
-                className={styles.cross}
-                onClick={() => handlequit({ setAddProject, addProject })}
-              >
-                <MdClose />
-              </div>
-              <h2 className={styles.addformheading}>Add Project Info</h2>
               {inputs.map((input) => (
                 <Inputs
                   input={input}

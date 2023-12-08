@@ -54,6 +54,12 @@ const userSchema = new mongoose.Schema(
         message: "password and confirm password did not match",
       },
     },
+    projects: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Project",
+      },
+    ],
     passwordChangedAt: Date,
     active: {
       type: Boolean,

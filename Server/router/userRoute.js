@@ -5,6 +5,9 @@ const router = express.Router();
 
 router.route("/").get(authController.protect, userController.getAllUsers);
 router
+  .route("/projects")
+  .get(authController.protect, userController.getUserProjects);
+router
   .route("/update-my-password")
   .post(authController.protect, authController.updateMyPassword);
 router.route("/:id").get(authController.protect, userController.getUser);

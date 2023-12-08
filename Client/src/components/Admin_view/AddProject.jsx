@@ -207,10 +207,9 @@ function AddProject() {
       {!addProject ? (
         <div
           className={styles.admin_addproject}
-          onClick={() => setAddProject(!addProject)}
         >
-          <div className={styles.addicon}>
-            <IoAddSharp />
+          <div className={styles.addicon} onClick={() => setAddProject(!addProject)}>
+            <IoAddSharp  />
           </div>
           <div className={styles.addmessage}>Add a new project</div>
         </div>

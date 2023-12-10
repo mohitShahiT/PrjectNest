@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./Admin_addproject.module.css";
 import { IoAddSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import AsyncSelect from "react-select/async";
 import { debounce } from "lodash";
 import axios from "axios";
+import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
+
 
 function AddProject() {
   const [addProject, setAddProject] = useState(false);
   const [options, setOptions] = useState([]);
-
+  const currentUser = useContext(AuthContext);
+  console.log(currentUser.user)
   const handleChange = (selectedOption) => {
     console.log("handleChange", selectedOption);
   };
@@ -129,7 +132,7 @@ function AddProject() {
     {
       id: 5,
       name: "SubmissionDate",
-      label: "Submission Date",
+      label: "Submission",
       placeholder: "Choose a Supervisor",
       type: "date",
       error: "Choose a Supervisor",
@@ -216,17 +219,16 @@ function AddProject() {
       ) : (
         <div className={styles.projectform}>
           <div className={styles.formcontent}>
+              <div
+                className={styles.cross}
+              >
+                <MdClose className={styles.crossBtn} onClick={() => handlequit({ setAddProject, addProject })} />
+              </div>
+              <h2 className={styles.addformheading}>Add Project Info</h2>
             <form
               className={styles.projectdetails}
               onSubmit={(e) => handleSubmit(e)}
             >
-              <div
-                className={styles.cross}
-                onClick={() => handlequit({ setAddProject, addProject })}
-              >
-                <MdClose />
-              </div>
-              <h2 className={styles.addformheading}>Add Project Info</h2>
               {inputs.map((input) => (
                 <Inputs
                   input={input}
@@ -272,7 +274,9 @@ function Inputs({
                   loadOptions={loadOptions2}
                   className={styles.multiselect}
                   onChange={handleChangeSelect}
+                  placeholder={"Select Supervisor"}
                   required
+                
                 />
               </>
             ) : (
@@ -304,6 +308,7 @@ function Inputs({
             isMulti
             className={styles.multiselect}
             onChange={handleChangeMultiSelect}
+            placeholder={"Select Team Members"}
             required
           />
         ) : (

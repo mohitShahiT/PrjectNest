@@ -1,6 +1,5 @@
 .sidebar {
   background-color: var(--appcolor);
-  height: 95vh;
   width: 15rem;
   display: flexbox;
   flex-direction: column;
@@ -22,7 +21,6 @@
 }
 .hidesidebar {
   background-color: grey;
-  height: 90vh;
   width: 5rem;
   margin-left: 10px;
   margin-top: 10px;

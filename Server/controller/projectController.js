@@ -233,7 +233,7 @@ exports.removeMember = catchAsync(async (req, res, next) => {
     membersRoom.removeFromRoom(memberToRemove);
     const member = await User.findById(memberToRemove);
     const remin = member.projects.indexOf(project.id);
-    delete member.projects(remin);
+    member.projects.splice(remin, 1);
     await member.save({ validateBeforeSave: false });
     await supervisedRoom.save();
     await membersRoom.save();
@@ -291,8 +291,9 @@ exports.removeSupervisor = catchAsync(async (req, res, next) => {
   const supervisedRoom = await Room.findById(project.rooms[0]);
   supervisedRoom.removeFromRoom(project.supervisor);
   const supervisorObj = await User.findById(project.supervisor);
-  delete supervisorObj.projects(
-    supervisorObj.projects.indexOf(project.supervisor)
+  supervisorObj.projects.splice(
+    supervisorObj.projects.indexOf(project.supervisor),
+    1
   );
   await supervisorObj.save({ validateBeforeSave: false });
   project.supervisor = undefined;

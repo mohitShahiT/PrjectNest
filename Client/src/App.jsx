@@ -6,6 +6,7 @@ import Errorpage from "./pages/Errrorpage/Errorpage";
 import Adminaddproject from "./pages/Adminaddproject/Adminaddproject";
 import Admineditproject from "./pages/Admineditproject/Admineditproject";
 import AdmineditSelectedproject from "./pages/Admineditproject/AdmineditSelectedproject";
+<<<<<<< HEAD
 import Dashboard from './pages/Dashboard/Dashboard'
 import Chat from "./pages/Chat/Chat";
 import Gantt from "./pages/Gantt/Gantt";
@@ -17,10 +18,13 @@ import EditProfile from "./pages/EditProfile/EditProfile";
 import Task from "./pages/Task/Task";
 import Join from './components/Supervisor_view/Join/Join'
 
+=======
+import { AuthContextProvider } from "./components/LoginPage/AuthProvider/AuthProvider";
+>>>>>>> 181e7446e1e9f8ed695afd044df8a7ab5d33e9a9
 
 function App() {
   return (
-    <>
+    <AuthContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
@@ -47,7 +51,7 @@ function App() {
           <Route path='/join' component = {Join} />
         </Routes>
       </BrowserRouter>
-    </>
+    </ AuthContextProvider>
   );
 }
 

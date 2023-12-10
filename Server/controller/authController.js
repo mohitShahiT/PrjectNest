@@ -189,3 +189,5 @@ exports.projectMemberRestricted = catchAsync(async (req, res, next) => {
   req.project = project;
   next();
 });
+
+exports.getUserFromToken = catchAsync(async () => {});

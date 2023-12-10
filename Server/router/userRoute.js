@@ -13,6 +13,7 @@ router
 router.route("/:id").get(authController.protect, userController.getUser);
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
+router.route("/token/:authtoken").get(authController.getUserFromToken);
 
 router
   .route("/:id/assign-role")

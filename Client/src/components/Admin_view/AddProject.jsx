@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./Admin_addproject.module.css";
 import { IoAddSharp } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 import AsyncSelect from "react-select/async";
 import { debounce } from "lodash";
 import axios from "axios";
+import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
+
 
 function AddProject() {
   const [addProject, setAddProject] = useState(false);
   const [options, setOptions] = useState([]);
-
+  const currentUser = useContext(AuthContext);
+  console.log(currentUser.user)
   const handleChange = (selectedOption) => {
     console.log("handleChange", selectedOption);
   };

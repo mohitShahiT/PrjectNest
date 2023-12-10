@@ -6,10 +6,11 @@ import Errorpage from "./pages/Errrorpage/Errorpage";
 import Adminaddproject from "./pages/Adminaddproject/Adminaddproject";
 import Admineditproject from "./pages/Admineditproject/Admineditproject";
 import AdmineditSelectedproject from "./pages/Admineditproject/AdmineditSelectedproject";
+import { AuthContextProvider } from "./components/LoginPage/AuthProvider/AuthProvider";
 
 function App() {
   return (
-    <>
+    <AuthContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
@@ -26,7 +27,7 @@ function App() {
           <Route path="*" element={<Errorpage />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </ AuthContextProvider>
   );
 }
 

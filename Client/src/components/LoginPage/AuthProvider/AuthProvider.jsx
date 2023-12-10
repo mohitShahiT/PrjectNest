@@ -1,40 +1,37 @@
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
-  const [token, setToken_] = useState(localStorage.getItem("token"));
+const AuthContextProvider = (props) => {
+  const [user, setUser] = useState(undefined);
 
-  const setToken = (newToken) => {
-    setToken_(newToken);
-  };
-
-  useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-      localStorage.setItem("token", token);
-    } else {
-      delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("token");
+  // useEffect(()=>{
+  //   getUser();
+  // },[])
+  const getUser = async ()=>{
+    try{
+      const response = await axios.get(`http://localhost:8000/user/token/${localStorage.getItem("jwtToken")}`);
+      if(response.data.status !== "success")  {
+        setUser(undefined);
+        return;
+      }
+      setUser(response.data.data.user);
     }
-  }, [token]);
+    catch(e){
+      setUser(undefined);
+    }
+  }
+  const setCurrentUser = (currentUser) =>{
+    setUser(currentUser);
+  }
 
-  const contextValue = useMemo(
-    () => ({
-      token,
-      setToken,
-    }),
-    [token]
-  );
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{user, setCurrentUser}}>{props.children}</AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
 
-export default AuthProvider;
+export default AuthContext;
+export {AuthContextProvider};

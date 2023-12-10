@@ -2,17 +2,19 @@
 import axios from "axios";
 import styles from "./Admin_editproject.module.css";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdEditDocument } from "react-icons/md";
+import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
 
 function EditProject() {
   const [projects, setProjects] = useState([]);
+  const currentUser = useContext(AuthContext);
   useEffect(() => {
     ProjectList(setProjects);
   }, []);
   console.log(projects);
-
+  console.log(currentUser);
   return (
     <div className={styles.adminprojectcontainer}>
       <div className={styles.edit_project}>

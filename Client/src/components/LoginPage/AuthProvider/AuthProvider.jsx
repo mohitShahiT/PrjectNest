@@ -6,17 +6,18 @@ const AuthContext = createContext();
 const AuthContextProvider = (props) => {
   const [user, setUser] = useState(undefined);
 
-  // useEffect(()=>{
-  //   getUser();
-  // },[])
+  useEffect(()=>{
+    getUser();
+  },[])
   const getUser = async ()=>{
     try{
-      const response = await axios.get(`http://localhost:8000/user/token/${localStorage.getItem("jwtToken")}`);
+      const response = await axios.get(`http://localhost:8000/api/v1/user/token/${localStorage.getItem("jwtToken")}`);
+      console.log(response)
       if(response.data.status !== "success")  {
         setUser(undefined);
         return;
       }
-      setUser(response.data.data.user);
+      setUser(response.data.user);
     }
     catch(e){
       setUser(undefined);

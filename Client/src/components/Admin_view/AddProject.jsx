@@ -22,7 +22,7 @@ function AddProject() {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("jwtToken"),
         },
-      });
+      }); 
      
      
       if (response.data.status === "success") {

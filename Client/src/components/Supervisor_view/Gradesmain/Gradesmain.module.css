@@ -1,0 +1,4 @@
+.gradesmain{
+    display: flex;
+    flex-direction: row;
+}

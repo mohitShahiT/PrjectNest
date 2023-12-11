@@ -11,7 +11,7 @@ const SignInform = ({ clicked, handleClick }) => {
   const [user, setUser] = useState({ auth: false, name: "" });
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
-  const currentUser = useContext(AuthContext)
+  const currentUser = useContext(AuthContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -32,6 +32,9 @@ const SignInform = ({ clicked, handleClick }) => {
         if (res.data.data.user.role === "admin") {
           console.log("decoding Ravi");
           navigate("/admin");
+        }
+        if (res.data.data.user.role === "supervisor") {
+          navigate("/dashboard");
         }
       })
       .catch((err) => {

@@ -10,7 +10,10 @@ import { Link } from "react-router-dom";
 
 import DropDown from '../DropDown/DropDown'
 import styles from './SideBar.module.css'
-const SideBar = () => {
+import { useContext } from "react"
+import AuthContext from "../../LoginPage/AuthProvider/AuthProvider"
+const SideBar = ({user}) => {
+
   return (
     <div className={styles.sideBar}>
     

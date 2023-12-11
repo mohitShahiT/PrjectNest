@@ -4,7 +4,7 @@ import {BsCalendar2Check} from 'react-icons/bs'
 // import Task from '../../pages/Task/Task'
 import Calendar from '../Calendar/Calendar'
 
-const Rightdisplay = () => {
+const Rightdisplay = ({user}) => {
   return (
     <div className={styles.rightdisplay}>
       <div className={styles.headersection}>

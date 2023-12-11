@@ -15,13 +15,13 @@ import Logsheet from "./pages/Logsheet/Logsheet";
 import Members from "./pages/Members/Members";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import Task from "./pages/Task/Task";
-import Join from './components/Supervisor_view/Join/Join'
+import Join, { user } from './components/Supervisor_view/Join/Join'
 
 import { AuthContextProvider } from "./components/LoginPage/AuthProvider/AuthProvider";
 
 function App() {
   return (
-    <AuthContextProvider>
+    <AuthContextProvider value={user}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />

@@ -1,13 +1,13 @@
-import styles from './Profiledropdown.module.css';
-import React, { useState } from 'react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
-import { RxAvatar } from 'react-icons/rx';
-import { LuUserCircle } from 'react-icons/lu';
-import { MdLogout } from 'react-icons/md';
-import { IoMdRemoveCircle } from 'react-icons/io';
+import styles from "./Profiledropdown.module.css";
+import React, { useState } from "react";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { RxAvatar } from "react-icons/rx";
+import { LuUserCircle } from "react-icons/lu";
+import { MdLogout } from "react-icons/md";
+import { IoMdRemoveCircle } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-const Profiledropdown = () => {
+const Profiledropdown = ({ userDetails }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -34,15 +34,15 @@ const Profiledropdown = () => {
                 </a>
               </div>
               <Link className={styles.namenemail} to="/editprofile">
-                <div className={styles.name}>Ravi Pajiyar</div>
-                <div className={styles.email}>pajiyargravi@gmail.com</div>
+                <div className={styles.name}>{userDetails.name}</div>
+                <div className={styles.email}>{userDetails.email}</div>
               </Link>
             </li>
             <li className={styles.listacc}>
-              Log Out <MdLogout fontSize={'22px'} />
+              Log Out <MdLogout fontSize={"22px"} />
             </li>
             <li className={styles.listacc}>
-              Delete Account <IoMdRemoveCircle fontSize={'22px'} />
+              Delete Account <IoMdRemoveCircle fontSize={"22px"} />
             </li>
           </ul>
         </div>

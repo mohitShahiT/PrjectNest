@@ -25,7 +25,7 @@ const SignInform = ({ clicked, handleClick }) => {
       .then((res) => {
         console.log(res.data.token);
         localStorage.setItem("jwtToken", res.data.token);
-        currentUser.setCurrentUser(res.data.data.user);
+        currentUser.getUser();
         axios.defaults.headers.common["Authorization"] =
           "Bearer" + res.data.token;
         setUser({ auth: true, name: res.data.data.user.email });
@@ -60,15 +60,15 @@ const SignInform = ({ clicked, handleClick }) => {
   return (
     <div className={clicked ? `${styles.SignInform}` : `${styles.hidden}`}>
       <div className={styles.SignInform_quit}>
-        <button className={styles.cross} onClick={handlecross}>
+        <div className={styles.cross} onClick={handlecross}>
           <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
             {" "}
             &#10006;
           </Link>
-        </button>
+        </div>
       </div>
       <h1 style={{ textAlign: "center", color: "azure" }}> SignIn</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.signInFormForm}>
         <InputItem
           value={email}
           type="email"

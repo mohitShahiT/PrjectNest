@@ -313,7 +313,7 @@ function Inputs({
           />
         ) : (
           <input
-            className={styles.inputtext}
+            className={styles.addProjectIinputtext}
             type={input.type}
             placeholder={input.placeholder}
             key={input.id}

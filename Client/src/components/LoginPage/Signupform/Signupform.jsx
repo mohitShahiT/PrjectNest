@@ -140,17 +140,17 @@ const Signupform = ({ clicked, handleClick }) => {
   return (
     <div className={clicked ? `${styles.Signupform}` : `${styles.hidden}`}>
       <div className={styles.Signupform_quit}>
-        <button className={styles.cross} onClick={handlecross}>
-          <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
+        <div className={styles.cross} >
+          <Link to={"/"} onClick={handlecross} style={{ textDecoration: "none", color: "white" }}>
             &#10006;
           </Link>
-        </button>
+        </div>
       </div>
       <h1 style={{ textAlign: "center", color: "azure" }}>
         {" "}
         Create An Account
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.signUpFormForm}>
         {inputs.map((input) => (
           <InputItem
             key={input.id}
@@ -185,7 +185,7 @@ function InputItem(props) {
         required={props.required}
         pattern={props.pattern}
         onBlur={handlefocus}
-        className={styles.inputs}
+        className={styles.signUpInputs}
         focused={focused.toString()}
       />
       <p className={styles.errorsection}>{props.error}</p>

@@ -1,21 +1,17 @@
 .Signupform {
   position: absolute;
-  top: 3vh;
-  left: 30vw;
-  background-color: #090b18;
-  background-color: #00415a;
-  background-color: #001f2b;
+  height: 100vh;
+  left: 50%;
+  transform: translate(-50%, 0);
+  overflow: hidden;
+  padding: 1rem;
   background-color: #001f2bea;
-
-  height: 96vh;
-  width: 45vw;
+  width: 40vw;
   border-radius: 4%;
 }
-.inputs {
-  width: 50%;
-  height: 3rem;
-  padding: 15px;
-
+.signUpInputs {
+  height: 2rem;
+  padding: 10px 15px;
   font-size: large;
   color: black;
   border-radius: 10px;
@@ -29,38 +25,36 @@
 }
 
 .submitbtn {
-  padding: 0px;
-  height: 2rem;
-  width: 30%;
-  color: black;
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+  color: white;
   cursor: pointer;
-  border-radius: 20px;
-  background-color: #032e3f;
+  border-radius: 10px;
   background-color: #0b3f53;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-weight: 300;
   font-size: large;
-  border: none;
-  color: rgb(255, 254, 254);
+  letter-spacing: 2px;
+  border: 1px solid rgba(128, 128, 128, 0.459);
 }
 .submitbtn:hover {
   background-color: #032e3f;
-
-  transition-duration: 1s;
+  transition-duration: 0.5s;
 }
 .Signupform_quit {
-  padding: 15px;
-  text-align: end;
-  font-size: large;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-form {
-  padding: 10px;
+.signUpFormForm {
+  padding: 10px 30px;
+  margin-top: 15px;
 }
 .inputbox {
   display: flex;
   flex-direction: column;
-  padding: 0.8%;
   /* text-align: center; */
 
   align-items: center;
@@ -80,16 +74,11 @@ form {
 }
 
 .cross {
-  cursor: pointer;
-  font-size: 25px;
   background-color: transparent;
   border: none;
+  font-size: larger;
 }
 
-.cross:hover {
-  color: rgb(150, 150, 150);
-  transition-duration: 1s;
-}
 
 h1 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

@@ -153,6 +153,7 @@ const Chatdisplay = () => {
       </div>
       <div className={styles.input_box}>
         <input
+        className={styles.chatInput}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}

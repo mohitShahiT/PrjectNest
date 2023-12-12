@@ -21,11 +21,9 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <span className={styles.icons}>
-          <MdOutlineAssignment />
-        </span>
         <Link to="addproject">
-          <span className={styles.sidebarOption}>Add Project</span>
+          <MdOutlineAssignment size={20} />
+          {!hide ?<span className={styles.sidebarOption}>Add Project</span>:<></>}
         </Link>
       </div>
       <div
@@ -33,12 +31,10 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <span className={styles.icons}>
-          <FiEdit />
-        </span>
-
         <Link to="editproject">
-          <span className={styles.sidebarOption}>Edit Project</span>
+          <FiEdit size={20}/>
+
+          {!hide?<span className={styles.sidebarOption}>Edit Project</span>:<></>}
         </Link>
       </div>
 
@@ -47,20 +43,20 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <span className={styles.icons}>
-          <TbListDetails />
-        </span>
-        <span className={styles.sidebarOption}>Project Details</span>
+        <Link to="editproject">
+          <TbListDetails size={20}/>
+        {!hide ?<span className={styles.sidebarOption}>Project Details</span>:<></>}
+        </Link>
       </div>
       <div
         className={
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <span className={styles.icons}>
-          <FiSettings />
-        </span>
-        <span className={styles.sidebarOption}>Settings</span>
+        <Link to="editproject">
+          <FiSettings size={20}/>
+        {!hide? <span className={styles.sidebarOption}>Settings</span>:<></>}
+      </Link>
       </div>
       <div
         className={styles.sidebaritem}
@@ -69,18 +65,12 @@ function Sidebar() {
       >
         {!hide ? (
           <>
-            <span className={styles.icons}>
               {" "}
-              <BiArrowBack />{" "}
-            </span>
-            <span>Hide</span>
+              <BiArrowBack size={20} />{" "}
           </>
         ) : (
           <>
-            <span className={styles.icons}>
-              <IoMdArrowForward />
-            </span>
-            <span>Show</span>
+              <IoMdArrowForward size={30} />
           </>
         )}
       </div>

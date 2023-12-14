@@ -13,8 +13,6 @@ function EditProject() {
   useEffect(() => {
     ProjectList(setProjects);
   }, []);
-  console.log(projects);
-  console.log(currentUser);
   return (
     <div className={styles.adminprojectcontainer}>
       <div className={styles.edit_project}>

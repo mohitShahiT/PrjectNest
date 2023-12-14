@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Signupform.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const Signupform = ({ clicked, handleClick }) => {
   const [values, setValues] = useState({
@@ -120,6 +120,7 @@ const Signupform = ({ clicked, handleClick }) => {
       const message = "New account has been created";
       handleClick(!clicked);
       alert(message);
+      Navigate("/")
     } else {
       const message = "Account with current email already exists";
       alert(message);

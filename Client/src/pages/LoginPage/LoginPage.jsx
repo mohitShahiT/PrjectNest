@@ -5,9 +5,9 @@ import styles from "./LoginPage.module.css";
 import HomeLogo from "../../components/LoginPage/HomeLogo/HomeLogo";
 import LoginAndSignup from "../../components/LoginPage/LoginAndSignup/LoginAndSignup";
 
-const LoginPage = () => {
-  const [clicked, setClicked] = useState(false);
-  const [signin, setSignin] = useState(false);
+const LoginPage = ({signinActive, signUpActive}) => {
+  const [clicked, setClicked] = useState(signUpActive);
+  const [signin, setSignin] = useState(signinActive);
 
   return (
     <div className={`${styles.loginpage} `}>

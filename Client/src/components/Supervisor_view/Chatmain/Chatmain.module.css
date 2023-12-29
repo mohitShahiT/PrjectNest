@@ -1,0 +1,4 @@
+.chatmain{
+    display: flex;
+    flex-direction: row;
+}

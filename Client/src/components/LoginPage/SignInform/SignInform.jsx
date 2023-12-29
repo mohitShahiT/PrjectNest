@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./SignInform.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import LoggedIn from "../../../pages/AdminPage/AdminPage";
 import axios from "axios";
-
+import AuthContext from "../AuthProvider/AuthProvider";
 
 const SignInform = ({ clicked, handleClick }) => {
   const [email, setEmail] = useState("");
@@ -11,6 +11,7 @@ const SignInform = ({ clicked, handleClick }) => {
   const [user, setUser] = useState({ auth: false, name: "" });
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
+  const currentUser = useContext(AuthContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -24,12 +25,16 @@ const SignInform = ({ clicked, handleClick }) => {
       .then((res) => {
         console.log(res.data.token);
         localStorage.setItem("jwtToken", res.data.token);
+        currentUser.getUser();
         axios.defaults.headers.common["Authorization"] =
           "Bearer" + res.data.token;
         setUser({ auth: true, name: res.data.data.user.email });
         if (res.data.data.user.role === "admin") {
           console.log("decoding Ravi");
           navigate("/admin");
+        }
+        if (res.data.data.user.role === "supervisor") {
+          navigate("/dashboard");
         }
       })
       .catch((err) => {
@@ -55,15 +60,15 @@ const SignInform = ({ clicked, handleClick }) => {
   return (
     <div className={clicked ? `${styles.SignInform}` : `${styles.hidden}`}>
       <div className={styles.SignInform_quit}>
-        <button className={styles.cross} onClick={handlecross}>
+        <div className={styles.cross} onClick={handlecross}>
           <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
             {" "}
             &#10006;
           </Link>
-        </button>
+        </div>
       </div>
       <h1 style={{ textAlign: "center", color: "azure" }}> SignIn</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.signInFormForm}>
         <InputItem
           value={email}
           type="email"

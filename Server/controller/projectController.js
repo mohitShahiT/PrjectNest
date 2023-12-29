@@ -73,19 +73,21 @@ exports.addProject = catchAsync(async (req, res, next) => {
     if (diff > 0)
       return next(new AppError(400, "submission date is in the past"));
   }
+  let supervisor;
   if (projectData.supervisor) {
-    const supervisor = await User.findById(projectData.supervisor);
+    supervisor = await User.findById(projectData.supervisor);
     if (!supervisor) return next(new AppError(400, "supervisor doesnot exist"));
     if (supervisor.role !== "supervisor")
       return next(new AppError(400, "not a supervisor"));
   }
+  let members;
   if (projectData.members) {
     if (!Array.isArray(projectData.members))
       return next(new AppError(400, "members must be an array of users"));
     const membersPromises = projectData.members.map(async (member) => {
       return await User.findById(member);
     });
-    const members = await Promise.all(membersPromises);
+    members = await Promise.all(membersPromises);
     if (members.includes(null)) {
       return next(
         new AppError(
@@ -95,12 +97,20 @@ exports.addProject = catchAsync(async (req, res, next) => {
       );
     }
   }
-  const projct = await Project.create(projectData);
+  const project = await Project.create(projectData);
+  members.forEach((member) => {
+    member.projects.push(project.id);
+  });
+  await Promise.all(
+    members.map(async (mem) => await mem.save({ validateBeforeSave: false }))
+  );
+  supervisor.projects.push(project.id);
+  await supervisor.save({ validateBeforeSave: false });
 
   res.status(200).json({
     status: "success",
     data: {
-      data: projct,
+      data: project,
     },
   });
 });
@@ -181,12 +191,15 @@ exports.addMembers = catchAsync(async (req, res, next) => {
 
   const supervisedRoom = await Room.findById(project.rooms[0]);
   const membersRoom = await Room.findById(project.rooms[1]);
+
   const pushMemberesPromises = req.body.newMembers.map(async (member) => {
     if (!project.members.includes(member)) {
       const user = await User.findById(member);
       if (!user)
         return next(new AppError(404, `user with id ${member} does not exist`));
       project.members.push(member);
+      user.projects.push(project.id);
+      await user.save({ validateBeforeSave: false });
       supervisedRoom.addToRoom(member);
       membersRoom.addToRoom(member);
     }
@@ -218,7 +231,10 @@ exports.removeMember = catchAsync(async (req, res, next) => {
     project.members.splice(index, 1);
     supervisedRoom.removeFromRoom(memberToRemove);
     membersRoom.removeFromRoom(memberToRemove);
-
+    const member = await User.findById(memberToRemove);
+    const remin = member.projects.indexOf(project.id);
+    member.projects.splice(remin, 1);
+    await member.save({ validateBeforeSave: false });
     await supervisedRoom.save();
     await membersRoom.save();
     await project.save();
@@ -254,6 +270,9 @@ exports.addSupervisor = catchAsync(async (req, res, next) => {
   const supervisedRoom = await Room.findById(project.rooms[0]);
   supervisedRoom.addToRoom(supervisor);
 
+  const supervisorObj = await User.findById(supervisor);
+  supervisorObj.projects.push(project.id);
+  await supervisorObj.save({ validateBeforeSave: false });
   await supervisedRoom.save();
   await project.save();
 
@@ -271,6 +290,12 @@ exports.removeSupervisor = catchAsync(async (req, res, next) => {
   if (!project) return next(new AppError(404, "no project with that id"));
   const supervisedRoom = await Room.findById(project.rooms[0]);
   supervisedRoom.removeFromRoom(project.supervisor);
+  const supervisorObj = await User.findById(project.supervisor);
+  supervisorObj.projects.splice(
+    supervisorObj.projects.indexOf(project.supervisor),
+    1
+  );
+  await supervisorObj.save({ validateBeforeSave: false });
   project.supervisor = undefined;
   await supervisedRoom.save();
   await project.save();

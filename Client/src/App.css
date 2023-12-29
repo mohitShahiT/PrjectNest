@@ -5,6 +5,7 @@
 }
 :root {
   --appcolor: #131a22;
+  --appcolorLight:#0d1218; 
   --gray: #2e2e2e;
   --white: #fff;
   --lightgray: #ddd;

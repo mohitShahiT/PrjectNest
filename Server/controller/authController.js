@@ -189,3 +189,17 @@ exports.projectMemberRestricted = catchAsync(async (req, res, next) => {
   req.project = project;
   next();
 });
+
+exports.getUserFromToken = catchAsync(async (req, res, next) => {
+  const { authtoken } = req.params;
+  const data = await promisify(jwt.verify)(authtoken, process.env.JWT_SECRET);
+  //checking if the user exists
+  const user = await User.findById(data.id);
+  if (!user) {
+    next(new AppError(404, "user with that token no longer exists"));
+  }
+  res.status(200).json({
+    status: "success",
+    user,
+  });
+});

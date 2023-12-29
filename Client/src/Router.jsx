@@ -37,8 +37,7 @@ function Router() {
           element={<LoginPage signUpActive={false} signinActive={true} />}
           />
         {/* </>)} */}
-        {
-          currentUser.user?.role === "admin" && (<>
+        {/* {currentUser.user?.role === "admin" && (<> */}
           <Route path="admin" element={<AdminPage />}>
           <Route path="addproject" element={<Adminaddproject />} />
           <Route path="editproject" element={<Admineditproject />}></Route>
@@ -47,8 +46,8 @@ function Router() {
             element={<AdmineditSelectedproject />}
           />
         </Route>
-          </>)
-        }
+          {/* </>) */}
+        {/* } */}
         
         <Route path="*" element={<Errorpage />} />
         <Route path="/dashboard" element={<Dashboard />} />

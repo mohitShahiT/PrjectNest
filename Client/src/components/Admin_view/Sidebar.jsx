@@ -43,7 +43,7 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <Link to="editproject">
+        <Link to="#">
           <TbListDetails size={20}/>
         {!hide ?<span className={styles.sidebarOption}>Project Details</span>:<></>}
         </Link>
@@ -53,7 +53,7 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <Link to="editproject">
+        <Link to="#">
           <FiSettings size={20}/>
         {!hide? <span className={styles.sidebarOption}>Settings</span>:<></>}
       </Link>

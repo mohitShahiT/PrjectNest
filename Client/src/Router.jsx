@@ -48,8 +48,7 @@ function Router() {
         </Route>
           {/* </>) */}
         {/* } */}
-        
-        <Route path="*" element={<Errorpage />} />
+      
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/grades" element={<Grades />} />
         <Route path="/reports" element={<Reports />} />
@@ -60,6 +59,7 @@ function Router() {
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/task" element={<Task />} />
         <Route path="/join" component={Join} />
+        <Route path="*" element={<Errorpage />} />
       </Routes>
     </BrowserRouter>
   );

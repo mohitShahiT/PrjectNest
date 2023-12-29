@@ -1,6 +1,5 @@
 import axios from "axios";
 import styles from "./Admin_editproject.module.css";
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

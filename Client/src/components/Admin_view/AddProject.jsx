@@ -23,8 +23,7 @@ function AddProject() {
           Authorization: "Bearer " + localStorage.getItem("jwtToken"),
         },
       });
-     
-     
+
       if (response.data.status === "success") {
         const newOptions = response.data.data.users.map((user) => {
           return {
@@ -49,12 +48,6 @@ function AddProject() {
     try {
       const link = `http://localhost:8000/api/v1/user/?email=${searchValue}&role=supervisor`;
 
-      // const response = await fetch(link, {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/JSON",
-      //   },
-      // });
       const response = await axios.get(link, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("jwtToken"),
@@ -149,6 +142,7 @@ function AddProject() {
 
   const [supervisor, setSupervisor] = useState("");
   const [members, setMembers] = useState([]);
+
 
   const handleChangeSelect = (e) => {
     setSupervisor(e.value);

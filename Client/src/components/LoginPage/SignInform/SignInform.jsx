@@ -25,7 +25,7 @@ const SignInform = ({ clicked, handleClick }) => {
       .then((res) => {
         console.log(res.data.token);
         localStorage.setItem("jwtToken", res.data.token);
-        currentUser.setCurrentUser(res.data.data.user);
+        currentUser.getUser()
         axios.defaults.headers.common["Authorization"] =
           "Bearer" + res.data.token;
         setUser({ auth: true, name: res.data.data.user.email });

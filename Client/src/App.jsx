@@ -6,8 +6,8 @@ import { AuthContextProvider } from "./components/LoginPage/AuthProvider/AuthPro
 function App() {
   return (
     <AuthContextProvider>
-      <Router/>
-    </ AuthContextProvider>
+      <Router />
+    </AuthContextProvider>
   );
 }
 

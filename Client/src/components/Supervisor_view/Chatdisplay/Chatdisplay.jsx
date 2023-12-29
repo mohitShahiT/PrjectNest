@@ -1,10 +1,9 @@
-
-import {GoMention} from 'react-icons/go'
-import {BsCalendar2Check} from 'react-icons/bs'
+import { GoMention } from "react-icons/go";
+import { BsCalendar2Check } from "react-icons/bs";
 // import React, { useEffect, useState } from 'react'
 // import { user } from "../Join/Join";
 // import socketIo from "socket.io-client";
-import styles from './Chatdisplay.module.css';
+import styles from "./Chatdisplay.module.css";
 // import sendLogo from "/Image/send.png";
 // import Message from "../Message/Message";
 import ReactScrollToBottom from "react-scroll-to-bottom";
@@ -99,30 +98,30 @@ import ReactScrollToBottom from "react-scroll-to-bottom";
 
 // Chatdisplay.js
 
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
-const socket = io('http://localhost:5000'); // Your backend URL
+const socket = io("http://localhost:5000"); // Your backend URL
 
 const Chatdisplay = () => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     // Listen for incoming messages from the server
-    socket.on('message', (data) => {
+    socket.on("message", (data) => {
       setMessages([...messages, data]);
     });
 
     return () => {
-      socket.off('message');
+      socket.off("message");
     };
   }, [messages]);
 
   const sendMessage = () => {
-    if (input.trim() !== '') {
-      socket.emit('message', { text: input });
-      setInput('');
+    if (input.trim() !== "") {
+      socket.emit("message", { text: input });
+      setInput("");
     }
   };
 
@@ -132,11 +131,11 @@ const Chatdisplay = () => {
         <h3 className={styles.dashhead3}>Realtime Chat </h3>
         <ul className={styles.subnav3}>
           <li className={styles.subnavlist3}>
-            <GoMention fontSize={'20px'} />
+            <GoMention fontSize={"20px"} />
             Mentions()
           </li>
           <li className={styles.subnavlist3}>
-            <BsCalendar2Check fontSize={'20px'} />
+            <BsCalendar2Check fontSize={"20px"} />
             Calendar
           </li>
         </ul>
@@ -145,7 +144,9 @@ const Chatdisplay = () => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`${styles.message} ${msg.isSent ? styles.sent : styles.received}`}
+            className={`${styles.message} ${
+              msg.isSent ? styles.sent : styles.received
+            }`}
           >
             {msg.text}
           </div>
@@ -153,7 +154,6 @@ const Chatdisplay = () => {
       </div>
       <div className={styles.input_box}>
         <input
-        className={styles.chatInput}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -166,4 +166,3 @@ const Chatdisplay = () => {
 };
 
 export default Chatdisplay;
-

@@ -7,41 +7,20 @@ import { BiTask } from "react-icons/bi";
 import { GrDocumentPerformance } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
-import DropDown from "../DropDown/DropDown";
+import DropDown from "./components/DropDown/DropDown";
 import styles from "./SideBar.module.css";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../LoginPage/AuthProvider/AuthProvider";
 import axios from "axios";
-const SideBar = ({ user }) => {
-  const [activeProject, setActiveProject] = useState({});
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/v1/user/projects`,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-            },
-          }
-        );
-        if (response.data.status === "success") {
-          setActiveProject(response.data.projects[0]);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetch();
-  }, []);
-
+const SideBar = ({ user, activeProject }) => {
   return (
     <div className={styles.sideBar}>
       <div className={styles.project_details}>
         <div className={styles.project_about}>
-          <p className={styles.project_name}>{activeProject.name}</p>
-          <p className={styles.project_qote}>book renting software</p>
+          <p className={styles.project_name}>
+            {activeProject ? activeProject.name : "no project to show"}
+          </p>
+          <p className={styles.project_qote}></p>
         </div>
         <div className={styles.dropIcon}>
           <DropDown />
@@ -69,10 +48,6 @@ const SideBar = ({ user }) => {
             <HiOutlineUserGroup fontSize={"22px"} />
             Discuss
           </Link>
-          <Link className={styles.listitems} to="/gantt">
-            <LuGanttChart fontSize={"22px"} />
-            Gantt
-          </Link>
         </ul>
       </div>
       <div className={styles.separation_two}></div>
@@ -92,10 +67,6 @@ const SideBar = ({ user }) => {
           <Link className={styles.listitems} to="/members">
             <FaUserGroup fontSize={"22px"} />
             Members
-          </Link>
-          <Link className={styles.listitems} to="/grades">
-            <GrDocumentPerformance fontSize={"22px"} />
-            Grades
           </Link>
         </ul>
       </div>

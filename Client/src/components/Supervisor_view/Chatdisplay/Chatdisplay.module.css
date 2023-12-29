@@ -1,45 +1,44 @@
-.chatdisplay{
-    background-color: var(--appcolor);
-    width: 83%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.chatdisplay {
+  background-color: var(--appcolor);
+  width: 83%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.headersection3{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    height: 42px;
-    align-items: center;
-    border-bottom: 0.5px solid #5e6872;
-    color: white;
+.headersection3 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 42px;
+  align-items: center;
+  border-bottom: 0.5px solid #5e6872;
+  color: white;
 }
-.headersection3 h3{
-    margin-left: 10px;
-    cursor: pointer;
+.headersection3 h3 {
+  margin-left: 10px;
+  cursor: pointer;
 }
-.subnav3{
-    font-size: 15px;
-    display: flex;
-    gap: 10px;
-    padding: 0;
+.subnav3 {
+  font-size: 15px;
+  display: flex;
+  gap: 10px;
+  padding: 0;
+}
 
+.subnav3 li {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0px 8px 16px 0px rgba(39, 35, 35, 0.2);
+  padding: 0.4em 0.6em;
+  margin-right: 10px;
 }
 
-.subnav3 li{
-    list-style: none;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: flex-start;
-    cursor: pointer;
-    font-size: 14px;
-    box-shadow: 0px 8px 16px 0px rgba(39, 35, 35, 0.2);
-    padding: 0.4em 0.6em;
-    margin-right: 10px;
-}
-  
-  /* .chatContainer {
+/* .chatContainer {
     background-color: white;
     height: 60%;
     width: 50%;
@@ -112,7 +111,7 @@
     transform: translateX(10px);
   }
    */
-   /* Basic CSS for ChatApp component */
+/* Basic CSS for ChatApp component */
 .chat_box {
   height: 300px;
   overflow-y: scroll;
@@ -140,7 +139,7 @@
   margin-top: 20px;
 }
 
-.chatInput {
+input {
   flex: 1;
   padding: 8px;
   border-radius: 5px;

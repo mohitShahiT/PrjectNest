@@ -87,7 +87,6 @@ const Taskdisplay = () => {
                     <input
                       type="text"
                       placeholder="Assign Task"
-                      className={styles.taskInput}
                       value={taskData.assignTasks[index]?.assignTask || ""}
                       onChange={(e) => handleAssignTaskChange(e, index)}
                     />

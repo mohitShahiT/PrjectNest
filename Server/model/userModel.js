@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema(
         message: "password and confirm password did not match",
       },
     },
+    isGoogleSignUp: {
+      type: Boolean,
+      default: false,
+    },
     projects: [
       {
         type: mongoose.Schema.ObjectId,
@@ -87,6 +91,11 @@ userSchema.methods.passwordChangedAfter = function (JWTTimestamp) {
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
+  if (this.isGoogleSignUp) {
+    this.password = undefined;
+    this.confirmPassword = undefined;
+    next();
+  }
 
   this.password = await bcrypt.hash(this.password, 12); //hash(string to hash, salt)
   this.confirmPassword = undefined;
@@ -96,7 +105,6 @@ userSchema.pre("save", async function (next) {
 userSchema.pre("save", function (next) {
   if (!this.isModified("password") || this.isNew) return next();
   this.passwordChangedAt = Date.now() - 1000;
-  console.log("Password changed at function");
   next();
 });
 

@@ -60,6 +60,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     "confirmPassword"
     // "role"
   );
+
   const user = await User.create(userData);
   if (!user) {
     return next(new AppError(500, "something went wrong, please try again"));
@@ -90,6 +91,41 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError(401, "email or password is incorrect"));
   }
 
+  createSendToken(200, user, res);
+});
+
+exports.googleSignUp = catchAsync(async (req, res, next) => {
+  const userData = filterObject(
+    req.body,
+    "email",
+    "firstName",
+    "lastName",
+    "middleName",
+    "aud",
+    "photo"
+    // "role"
+  );
+  if (
+    !userData.aud &&
+    userData.aud ===
+      "277690260012-e7nsqvajlkr2rso77bjireu6e25ra6sp.apps.googleusercontent.com"
+  ) {
+    return new AppError(400, "you are not authorized to login");
+  }
+
+  let user = await User.findOne({
+    email: req.body.email,
+    isGoogleSignUp: true,
+  });
+  if (user) {
+    console.log("USER FOUND", user);
+    createSendToken(200, user, res);
+    return;
+  }
+  userData.isGoogleSignUp = true;
+  userData.password = "thisisdummypassword123@";
+  userData.confirmPassword = "thisisdummypassword123@";
+  user = await User.create(userData);
   createSendToken(200, user, res);
 });
 

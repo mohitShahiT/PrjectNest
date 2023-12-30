@@ -17,38 +17,43 @@ import Task from "./pages/Task/Task";
 import Join, { user } from "./components/Supervisor_view/Join/Join";
 import { useContext } from "react";
 import AuthContext from "./components/LoginPage/AuthProvider/AuthProvider";
+import projectdetails from "./pages/Adminprojectsdetails/Adminprojectsdetails";
 
 function Router() {
   const currentUser = useContext(AuthContext);
   return (
     <BrowserRouter>
       <Routes>
-          <Route
+        <Route
           path="/"
           element={<LoginPage signUpActive={false} signinActive={false} />}
-          />
+        />
         {/* {!currentUser.user && (<> */}
-          <Route
+        <Route
           path="signup"
           element={<LoginPage signUpActive={true} signinActive={false} />}
-          />
-          <Route
+        />
+        <Route
           path="login"
           element={<LoginPage signUpActive={false} signinActive={true} />}
-          />
+        />
         {/* </>)} */}
         {/* {currentUser.user?.role === "admin" && (<> */}
-          <Route path="admin" element={<AdminPage />}>
+        <Route path="admin" element={<AdminPage />}>
           <Route path="addproject" element={<Adminaddproject />} />
           <Route path="editproject" element={<Admineditproject />}></Route>
+          <Route
+            path="adminprojectdetails"
+            element={<projectdetails />}
+          ></Route>
           <Route
             path="editproject/:id"
             element={<AdmineditSelectedproject />}
           />
         </Route>
-          {/* </>) */}
+        {/* </>) */}
         {/* } */}
-        
+
         <Route path="*" element={<Errorpage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/grades" element={<Grades />} />

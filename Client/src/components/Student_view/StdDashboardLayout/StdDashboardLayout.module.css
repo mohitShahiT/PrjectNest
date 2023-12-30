@@ -1,0 +1,17 @@
+.dashboardlayout {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--appcolor);
+}
+.sidensubnright {
+  display: flex;
+  width: 100%;
+}
+.subnright {
+  display: flex;
+  flex-direction: column;
+}
+.noProjectDiv {
+  height: 100vh;
+  color: white;
+}

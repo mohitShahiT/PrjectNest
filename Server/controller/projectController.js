@@ -207,7 +207,12 @@ exports.addMembers = catchAsync(async (req, res, next) => {
   await Promise.all(pushMemberesPromises);
   await supervisedRoom.save();
   await membersRoom.save();
-  await project.save();
+  await (
+    await project.save()
+  ).populate({
+    path: "members",
+    model: "User",
+  });
 
   res.status(200).json({
     status: "success",

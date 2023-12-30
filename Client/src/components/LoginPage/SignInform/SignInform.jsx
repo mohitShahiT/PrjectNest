@@ -36,6 +36,9 @@ const SignInform = ({ clicked, handleClick }) => {
         if (res.data.data.user.role === "supervisor" || res.data.data.user.role === "student") {
           navigate("/dashboard");
         }
+        if (res.data.data.user.role === "student") {
+          navigate("/studentdashboard");
+        }
       })
       .catch((err) => {
         if (err.response) {

@@ -1,0 +1,4 @@
+.reportsdisplay {
+  display: flex;
+  flex-direction: column;
+}

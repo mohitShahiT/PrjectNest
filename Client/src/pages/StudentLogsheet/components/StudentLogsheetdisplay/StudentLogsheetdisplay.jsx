@@ -1,8 +1,8 @@
-import styles from "./Logsheetdisplay.module.css";
+import styles from "./StudentLogsheetdisplay.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Logsheetdisplay = () => {
+const StudentLogsheetdisplay = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeProject, setActiveProject] = useState(undefined);
   const [logsheetActive, setlogsheetActive] = useState(undefined);
@@ -244,4 +244,4 @@ const Logsheetdisplay = () => {
     </>
   );
 };
-export default Logsheetdisplay;
+export default StudentLogsheetdisplay;

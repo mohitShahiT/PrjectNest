@@ -15,6 +15,12 @@ import Task from "./pages/Task/Task";
 import Calendar from "./pages/Calendar/Calendar";
 import { useContext } from "react";
 import AuthContext from "./components/LoginPage/AuthProvider/AuthProvider";
+import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
+import StudentMembers from "./pages/StudentMembers/StudentMembers";
+import StudentReports from "./pages/StudentReports/StudentReports";
+import StudentTask from "./pages/StudentTask/StudentTask";
+import StudentLogsheet from "./pages/StudentLogsheet/StudentLogsheet";
+import StudentEditProfile from "./pages/StudentEditProfile/StudentEditProfile";
 
 function Router() {
   const currentUser = useContext(AuthContext);
@@ -40,6 +46,10 @@ function Router() {
           <Route path="addproject" element={<Adminaddproject />} />
           <Route path="editproject" element={<Admineditproject />}></Route>
           <Route
+            path="adminprojectdetails"
+            element={<projectdetails />}
+          ></Route>
+          <Route
             path="editproject/:id"
             element={<AdmineditSelectedproject />}
           />
@@ -55,6 +65,14 @@ function Router() {
         <Route path="/members" element={<Members />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/task" element={<Task />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/studentdashboard" element={<StudentDashboard />} />
+        <Route path="/studentreports" element={<StudentReports />} />
+        {/* <Route path="/studentchat" element={<StudentChat />} /> */}
+        <Route path="/studentlogsheet" element={<StudentLogsheet />} />
+        <Route path="/studentmembers" element={<StudentMembers />} />
+        <Route path="/studenteditprofile" element={<StudentEditProfile />} />
+        <Route path="/studenttask" element={<StudentTask />} />
         <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </BrowserRouter>

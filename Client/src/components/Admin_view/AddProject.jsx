@@ -7,12 +7,11 @@ import { debounce } from "lodash";
 import axios from "axios";
 import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
 
-
 function AddProject() {
   const [addProject, setAddProject] = useState(false);
   const [options, setOptions] = useState([]);
   const currentUser = useContext(AuthContext);
-  console.log(currentUser.user)
+  console.log(currentUser.user);
   const handleChange = (selectedOption) => {
     console.log("handleChange", selectedOption);
   };
@@ -25,7 +24,7 @@ function AddProject() {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("jwtToken"),
         },
-      }); 
+      });
 
       if (response.data.status === "success") {
         const newOptions = response.data.data.users.map((user) => {
@@ -146,7 +145,6 @@ function AddProject() {
   const [supervisor, setSupervisor] = useState("");
   const [members, setMembers] = useState([]);
 
-
   const handleChangeSelect = (e) => {
     setSupervisor(e.value);
   };
@@ -202,23 +200,25 @@ function AddProject() {
   return (
     <div className={styles.adminprojectcontainer}>
       {!addProject ? (
-        <div
-          className={styles.admin_addproject}
-        >
-          <div className={styles.addicon} onClick={() => setAddProject(!addProject)}>
-            <IoAddSharp  />
+        <div className={styles.admin_addproject}>
+          <div
+            className={styles.addicon}
+            onClick={() => setAddProject(!addProject)}
+          >
+            <IoAddSharp />
           </div>
           <div className={styles.addmessage}>Add a new project</div>
         </div>
       ) : (
         <div className={styles.projectform}>
           <div className={styles.formcontent}>
-              <div
-                className={styles.cross}
-              >
-                <MdClose className={styles.crossBtn} onClick={() => handlequit({ setAddProject, addProject })} />
-              </div>
-              <h2 className={styles.addformheading}>Add Project Info</h2>
+            <div className={styles.cross}>
+              <MdClose
+                className={styles.crossBtn}
+                onClick={() => handlequit({ setAddProject, addProject })}
+              />
+            </div>
+            <h2 className={styles.addformheading}>Add Project Info</h2>
             <form
               className={styles.projectdetails}
               onSubmit={(e) => handleSubmit(e)}
@@ -270,7 +270,6 @@ function Inputs({
                   onChange={handleChangeSelect}
                   placeholder={"Select Supervisor"}
                   required
-                
                 />
               </>
             ) : (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "./Taskdisplay.module.css";
+import styles from "./StudentTaskdisplay.module.css";
 
-const Taskdisplay = () => {
+const StudentTaskdisplay = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [taskData, setTaskData] = useState({
     assignTasks: [],
@@ -171,4 +171,4 @@ const Taskdisplay = () => {
   );
 };
 
-export default Taskdisplay;
+export default StudentTaskdisplay;

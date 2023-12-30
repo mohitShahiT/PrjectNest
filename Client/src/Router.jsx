@@ -7,17 +7,20 @@ import Admineditproject from "./pages/Admineditproject/Admineditproject";
 import AdmineditSelectedproject from "./pages/Admineditproject/AdmineditSelectedproject";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Chat from "./pages/Chat/Chat";
-import Gantt from "./pages/Gantt/Gantt";
-import Grades from "./pages/Grades/Grades";
 import Reports from "./pages/Reports/Reports";
 import Logsheet from "./pages/Logsheet/Logsheet";
 import Members from "./pages/Members/Members";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import Task from "./pages/Task/Task";
-import Join, { user } from "./components/Supervisor_view/Join/Join";
+import Calendar from "./pages/Calendar/Calendar";
 import { useContext } from "react";
 import AuthContext from "./components/LoginPage/AuthProvider/AuthProvider";
-import projectdetails from "./pages/Adminprojectsdetails/Adminprojectsdetails";
+import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
+import StudentMembers from "./pages/StudentMembers/StudentMembers";
+import StudentReports from "./pages/StudentReports/StudentReports";
+import StudentTask from "./pages/StudentTask/StudentTask";
+import StudentLogsheet from "./pages/StudentLogsheet/StudentLogsheet";
+import StudentEditProfile from "./pages/StudentEditProfile/StudentEditProfile";
 
 function Router() {
   const currentUser = useContext(AuthContext);
@@ -56,15 +59,21 @@ function Router() {
 
         <Route path="*" element={<Errorpage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/grades" element={<Grades />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/logsheet" element={<Logsheet />} />
-        <Route path="/gantt" element={<Gantt />} />
         <Route path="/members" element={<Members />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/task" element={<Task />} />
-        <Route path="/join" component={Join} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/studentdashboard" element={<StudentDashboard />} />
+        <Route path="/studentreports" element={<StudentReports />} />
+        {/* <Route path="/studentchat" element={<StudentChat />} /> */}
+        <Route path="/studentlogsheet" element={<StudentLogsheet />} />
+        <Route path="/studentmembers" element={<StudentMembers />} />
+        <Route path="/studenteditprofile" element={<StudentEditProfile />} />
+        <Route path="/studenttask" element={<StudentTask />} />
+        <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </BrowserRouter>
   );

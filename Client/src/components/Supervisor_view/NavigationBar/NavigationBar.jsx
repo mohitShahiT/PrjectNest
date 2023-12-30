@@ -1,12 +1,8 @@
 import styles from "./NavigationBar.module.css";
 
-import { IoSettingsOutline } from "react-icons/io5";
 import { FiHelpCircle } from "react-icons/fi";
-import { RxAvatar } from "react-icons/rx";
-import Profiledropdown from "../Profiledropdown/Profiledropdown";
-import Notifications from "../Notifications/Notifications";
-import Recent from "../Recent/Recent";
-import Starred from "../Starred/Starred";
+import Profiledropdown from "./components/Profiledropdown/Profiledropdown";
+import Recent from "./components/Recent/Recent";
 import { Link } from "react-router-dom";
 import Searchbar from "../../Admin_view/Searchbar";
 
@@ -33,16 +29,6 @@ const NavigationBar = ({ user }) => {
           <Searchbar />
         </div>
         <ul className={styles.profilesec}>
-          <li>
-            <a href="#notification">
-              <Notifications />
-            </a>
-          </li>
-          <li>
-            <a href="#settings">
-              <IoSettingsOutline />
-            </a>
-          </li>
           <li>
             <a href="#help">
               <FiHelpCircle />

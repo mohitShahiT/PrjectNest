@@ -1,15 +1,21 @@
-import Chatmain from "../../components/Supervisor_view/Chatmain/Chatmain"
-import NavigationBar from "../../components/Supervisor_view/NavigationBar/NavigationBar"
-import styles from './Chat.module.css'
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import NavigationBar from "../../components/Supervisor_view/NavigationBar/NavigationBar";
+import styles from "./Chat.module.css";
+import DashboardLayout from "../../components/Supervisor_view/DashboardLayout/DashboardLayout";
+import AuthContext from "../../components/LoginPage/AuthProvider/AuthProvider";
+import { useContext } from "react";
+import Chatdisplay from "./components/Chatdisplay/Chatdisplay";
 
-const Chat= () => {
+const Chat = () => {
+  const currentUser = useContext(AuthContext);
   return (
-    <div className={styles.chat}>
-        <NavigationBar/>
-        <Chatmain/>
-    </div>
-  )
-}
+    <DashboardLayout
+      title="Group Chat"
+      className={styles.chat}
+      user={currentUser.user}
+    >
+      <Chatdisplay />
+    </DashboardLayout>
+  );
+};
 
-export default Chat
+export default Chat;

@@ -33,10 +33,12 @@ const SignInform = ({ clicked, handleClick }) => {
           console.log("decoding Ravi");
           navigate("/admin");
         }
-        if (res.data.data.user.role === "supervisor") {
+        if (res.data.data.user.role === "supervisor" || res.data.data.user.role === "student") {
           navigate("/dashboard");
         }
-        
+        if (res.data.data.user.role === "student") {
+          navigate("/studentdashboard");
+        }
       })
       .catch((err) => {
         if (err.response) {

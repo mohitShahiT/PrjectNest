@@ -29,7 +29,12 @@ const projectSchema = new mongoose.Schema(
       },
       message: "{VALUE} is not a valid semster number",
     },
-
+    report: {
+      type: String,
+    },
+    proposal: {
+      type: String,
+    },
     description: {
       type: String,
     },

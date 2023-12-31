@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import styles from "./Admin_editproject.module.css";
 
@@ -17,7 +17,7 @@ async function ProjectList(setProjects) {
   }
 }
 
-function Adminprojectsdetails() {
+function Projectsdetails() {
   const [projects, setProjects] = useState([]);
   const currentUser = useContext(AuthContext);
   useEffect(() => {
@@ -65,4 +65,4 @@ function Adminprojectsdetails() {
     </div>
   );
 }
-export default Adminprojectsdetails;
+export default Projectsdetails;

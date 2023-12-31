@@ -287,7 +287,7 @@ function EditSelectedProject() {
       <h1 className={styles.heading}>Edit Profile</h1>
       <h2 className={styles.subheading}>Basic Information</h2>
       <div className={styles.form_section}>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form1} onSubmit={handleSubmit}>
           <label className={styles.label}>Project Title</label>
           <input
             type="text"
@@ -319,7 +319,9 @@ function EditSelectedProject() {
               className={styles.submitbtn}
               value="Change"
               onClick={submitInfoProject}
-            ></button>
+            >
+              Save Changes
+            </button>
           </div>
         </form>
         <hr />
@@ -327,7 +329,7 @@ function EditSelectedProject() {
         <h1 className={styles.heading}>Critical Section</h1>
         <h2 className={styles.subheading}>Change Supervisor</h2>
         <div className={styles.form_section}>
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form2} onSubmit={handleSubmit}>
             <AsyncSelect
               loadOptions={loadOptions2}
               onChange={handleChangeSelect}
@@ -336,14 +338,15 @@ function EditSelectedProject() {
             <div className={styles.submit}>
               <button
                 type="submit"
-                value="Change Supervisor"
                 className={styles.submitbtn}
                 onClick={submitChangeSupervisor}
-              ></button>
+              >
+                Change Supervisor
+              </button>
             </div>
           </form>
           <h2 className={styles.subheading}>Add New Team Members</h2>
-          <form className={styles.form} onSubmit={submitTeam}>
+          <form className={styles.form3} onSubmit={submitTeam}>
             {console.log(d)}
             <AsyncSelect
               isMulti
@@ -364,7 +367,7 @@ function EditSelectedProject() {
             className={styles.removeTeamMembers}
             onSubmit={(e) => handleSubmit(e)}
           >
-            <h2>Remove Team Members</h2>
+            <h2 className={styles.labelRemove}>Remove Team Members</h2>
             {console.log(defaultMembersOptions.map((mem) => mem.label))}
             <ul className={styles.addedmembers}>
               {defaultMembersOptions.map((mem) => (

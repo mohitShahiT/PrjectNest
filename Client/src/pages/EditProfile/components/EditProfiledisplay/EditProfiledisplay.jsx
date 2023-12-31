@@ -1,53 +1,49 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styles from "./EditProfiledisplay.module.css";
-const EditProfiledisplay = () => {
+import axios from "axios";
+const EditProfiledisplay = ({ currentUser }) => {
   const [userData, setUserData] = useState({
-    username: "",
-    fullName: "",
-    about: "",
+    firstName: "",
+    lastName: "",
     email: "", // Email is non-editable
-    image: null,
   });
   useEffect(() => {
     // Fetch user data from the backend and populate the fields
     // Assume an endpoint '/api/user' retrieves user data
-    fetch("/api/user") // Adjust the endpoint accordingly
-      .then((res) => res.json())
-      .then((data) => {
-        setUserData({
-          ...userData,
-          username: data.username,
-          fullName: data.fullName,
-          about: data.about,
-          email: data.email,
-          image: data.image,
-        });
-      })
-      .catch((error) => console.log("Error:", error));
+    // fetch("/api/user") // Adjust the endpoint accordingly
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    setUserData({
+      ...userData,
+      firstName: currentUser.user.firstName,
+      lastName: currentUser.user.lastName,
+      email: currentUser.user.email,
+    });
+    //   })
+    //   .catch((error) => console.log("Error:", error));
   }, []);
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Send updated user data to the backend
-    fetch("/api/updateUser", {
-      method: "PUT", // Adjust the method as per your backend API
-      headers: {
-        "Content-Type": "application/json",
+    const link = `http://127.0.0.1:8000/api/v1/user/update-my-info`;
+    axios.patch(
+      link,
+      {
+        firstName: firstName,
+        lastName: lastName,
       },
-      body: JSON.stringify(userData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Updated user data:", data);
-        // Handle success or any other actions after successful update
-      })
-      .catch((error) => console.log("Error:", error));
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+        },
+      }
+    );
   };
 
-  const [username, setUsername] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [password, setPassword] = useState("");
-  const [about, setAbout] = useState("");
+  // const [about, setAbout] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState(null);
 
@@ -70,34 +66,44 @@ const EditProfiledisplay = () => {
       </div>
       <div className={styles.right_section}>
         <h2>User Details</h2>
-        <form onSubmit={handleFormSubmit}>
-          <label>
-            Username:
+        <form onSubmit={handleFormSubmit} className={styles.form}>
+          <label className={styles.labels}>
+            First Name:
             <input
+              className={styles.inputFields}
               type="text"
-              value={userData.username}
+              defaultValue={userData.firstName}
               onChange={(e) =>
-                setUserData({ ...userData, username: e.target.value })
+                setUserData({ ...userData, firstName: e.target.value })
               }
             />
           </label>
-          <label>
-            Full Name:
+          <label className={styles.labels}>
+            Last Name:
             <input
+              className={styles.inputFields}
               type="text"
-              value={userData.fullName}
+              defaultValue={userData.lastName}
               onChange={(e) =>
-                setUserData({ ...userData, fullName: e.target.value })
+                setUserData({ ...userData, lastName: e.target.value })
               }
             />
           </label>
           {/* Password input is omitted here for security reasons */}
           <h2>Contact Section</h2>
-          <label>
+          <label className={styles.labels}>
             Email:
-            <input type="email" value={userData.email} readOnly />
+            <input
+              className={styles.inputFields}
+              type="email"
+              value={userData.email}
+              readOnly
+              disabled
+            />
           </label>
-          <button type="submit">Save Changes</button>
+          <button type="submit" className={styles.saveChange}>
+            Save Changes
+          </button>
         </form>
       </div>
     </div>

@@ -23,7 +23,11 @@ function Sidebar() {
       >
         <Link to="addproject">
           <MdOutlineAssignment size={20} />
-          {!hide ?<span className={styles.sidebarOption}>Add Project</span>:<></>}
+          {!hide ? (
+            <span className={styles.sidebarOption}>Add Project</span>
+          ) : (
+            <></>
+          )}
         </Link>
       </div>
       <div
@@ -32,9 +36,13 @@ function Sidebar() {
         }
       >
         <Link to="editproject">
-          <FiEdit size={20}/>
+          <FiEdit size={20} />
 
-          {!hide?<span className={styles.sidebarOption}>Edit Project</span>:<></>}
+          {!hide ? (
+            <span className={styles.sidebarOption}>Edit Project</span>
+          ) : (
+            <></>
+          )}
         </Link>
       </div>
 
@@ -44,8 +52,12 @@ function Sidebar() {
         }
       >
         <Link to="adminprojectdetails">
-          <TbListDetails size={20}/>
-        {!hide ?<span className={styles.sidebarOption}>Project Details</span>:<></>}
+          <TbListDetails size={20} />
+          {!hide ? (
+            <span className={styles.sidebarOption}>Project Details</span>
+          ) : (
+            <></>
+          )}
         </Link>
       </div>
       <div
@@ -53,10 +65,14 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <Link to="#">
-          <FiSettings size={20}/>
-        {!hide? <span className={styles.sidebarOption}>Settings</span>:<></>}
-      </Link>
+        <Link to="settings">
+          <FiSettings size={20} />
+          {!hide ? (
+            <span className={styles.sidebarOption}>Settings</span>
+          ) : (
+            <></>
+          )}
+        </Link>
       </div>
       <div
         className={styles.sidebaritem}
@@ -65,12 +81,12 @@ function Sidebar() {
       >
         {!hide ? (
           <>
-              {" "}
-              <BiArrowBack size={20} />{" "}
+            {" "}
+            <BiArrowBack size={20} />{" "}
           </>
         ) : (
           <>
-              <IoMdArrowForward size={30} />
+            <IoMdArrowForward size={30} />
           </>
         )}
       </div>

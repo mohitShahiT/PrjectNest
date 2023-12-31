@@ -19,6 +19,7 @@
     "framer-motion": "^10.16.16",
     "gantt-task-react": "^0.3.9",
     "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "loadash": "^1.0.0",
     "lodash": "^4.17.21",
     "multiselect-react-dropdown": "^2.0.25",

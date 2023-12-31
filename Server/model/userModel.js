@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: [true, "user must have last name"],
+      default: " ",
     },
     middleName: String,
     role: {

@@ -10,6 +10,9 @@ router
 router
   .route("/update-my-password")
   .post(authController.protect, authController.updateMyPassword);
+router
+  .route("/update-my-info")
+  .patch(authController.protect, authController.updateMyInfo);
 router.route("/:id").get(authController.protect, userController.getUser);
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);

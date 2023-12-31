@@ -95,6 +95,7 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.googleSignUp = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const userData = filterObject(
     req.body,
     "email",
@@ -147,6 +148,26 @@ exports.updateMyPassword = catchAsync(async (req, res, next) => {
 
   createSendToken(201, user, res);
 });
+
+exports.updateMyInfo = catchAsync(async (req, res, next) => {
+  const { firstName, lastName } = req.body;
+  let user = await User.findById(req.user.id);
+  const newData = {
+    firstName: firstName || user.firstName,
+    lastName: lastName || user.lastName,
+  };
+  user = await User.findByIdAndUpdate(req.user.id, newData, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+});
+
 exports.protect = catchAsync(async (req, res, next) => {
   //checking token if it exists and getting it from the http header
   let token;

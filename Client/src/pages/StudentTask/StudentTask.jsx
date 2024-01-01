@@ -8,7 +8,7 @@ const StudentTask = () => {
   const currentUser = useContext(AuthContext);
   return (
     <StdDashboardLayout
-      title="Add Task"
+      title="Task"
       className={styles.task}
       user={currentUser.user}
     >

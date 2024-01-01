@@ -1,9 +1,9 @@
 /* Chat.module.css */
 
 .chatPage {
-  /* background-color: rgb(31, 29, 29); */
-  width: 70vw;
-  height: 80vh;
+  background-color: rgb(31, 29, 29);
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,8 +12,8 @@
 
 .chatContainer {
   background-color: white;
-  height: 80%;
-  width: 80%;
+  height: 60%;
+  width: 50%;
   border-radius: 5px;
 }
 
@@ -45,8 +45,8 @@
   height: 70%;
   box-sizing: border-box;
   /* border: 0.2vmax solid black;
-  display: flex;
-  flex-direction: column; */
+    display: flex;
+    flex-direction: column; */
 }
 
 .inputBox {

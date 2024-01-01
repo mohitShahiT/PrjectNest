@@ -4,7 +4,9 @@
   position: relative;
   display: inline-block;
 }
-
+.toggle span:hover {
+  text-decoration: underline;
+}
 .dropdown_contentrecent {
   position: absolute;
   top: 100%;

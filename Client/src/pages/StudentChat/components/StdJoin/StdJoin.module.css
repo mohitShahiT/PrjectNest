@@ -1,17 +1,16 @@
 /* Join.module.css */
 
 .JoinPage {
-  width: 70vw;
-  height: 80vh;
+  background-color: rgb(31, 29, 29);
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .JoinContainer {
-  background-color: #032f61;
-  width: 80%;
-  height: 80%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;

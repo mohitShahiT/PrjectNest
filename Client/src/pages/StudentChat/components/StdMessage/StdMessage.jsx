@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./Messages.module.css";
+import styles from "./StdMessage.module.css"; // Import the CSS module
 
-const Messages = ({ user, message, classs }) => {
+const StdMessage = ({ user, message, classs }) => {
   if (user) {
     return (
       <div className={`${styles.messageBox} ${styles[classs]}`}>
@@ -17,4 +17,4 @@ const Messages = ({ user, message, classs }) => {
   }
 };
 
-export default Messages;
+export default StdMessage;

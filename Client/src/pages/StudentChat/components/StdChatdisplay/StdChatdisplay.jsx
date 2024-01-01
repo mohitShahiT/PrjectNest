@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import socketIO from "socket.io-client";
-import { user } from "../Join/Join";
-import styles from "./Chatdisplay.module.css";
+import { user } from "../StdJoin/StdJoin";
+import styles from "./StdChatdisplay.module.css";
 import sendLogo from "../../images/send.png";
-import Message from "../Message/Message";
+import StdMessage from "../StdMessage/StdMessage";
 import ReactScrollToBottom from "react-scroll-to-bottom";
 import closeIcon from "../../images/closeIcon.png";
 
@@ -11,7 +11,7 @@ let socket;
 
 const ENDPOINT = "http://localhost:4500/";
 
-const Chatdisplay = () => {
+const StdChatdisplay = () => {
   const [id, setid] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -74,7 +74,7 @@ const Chatdisplay = () => {
         </div>
         <ReactScrollToBottom className={styles.chatBox}>
           {messages.map((item, i) => (
-            <Message
+            <StdMessage
               user={item.id === id ? "" : item.user}
               message={item.message}
               class={item.id === id ? "right" : "left"}
@@ -97,4 +97,4 @@ const Chatdisplay = () => {
   );
 };
 
-export default Chatdisplay;
+export default StdChatdisplay;

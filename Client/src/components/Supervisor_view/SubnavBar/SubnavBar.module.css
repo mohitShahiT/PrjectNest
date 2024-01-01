@@ -1,36 +1,40 @@
 .subnavbar {
   background-color: var(--appcolor);
-  width: 998px;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 0.5px solid #5e6872;
 }
 .headersection {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  height: 42px;
   align-items: center;
-  border-bottom: 0.5px solid #5e6872;
   color: white;
-}
-.headersection h3 {
-  margin-left: 10px;
-  cursor: pointer;
 }
 .subnav {
   font-size: 15px;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   padding: 0;
 }
 
-.subnav li {
+.subnav li{
   list-style: none;
   display: flex;
-  gap: 8px;
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
-  font-size: 14px;
-  box-shadow: 0px 8px 16px 0px rgba(39, 35, 35, 0.2);
-  padding: 0.4em 0.6em;
-  margin-right: 10px;
+}
+
+
+.subnav li a{
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.subnav li a:hover {
+  color: grey;
 }

@@ -2,6 +2,7 @@ import DashboardLayout from "../../components/Supervisor_view/DashboardLayout/Da
 import styles from "./Reports.module.css";
 import AuthContext from "../../components/LoginPage/AuthProvider/AuthProvider";
 import { useContext } from "react";
+import ReportDisply from "./components/Reportsdisplay/Reportsdisplay"
 
 const Reports = () => {
   const currentUser = useContext(AuthContext);
@@ -10,7 +11,7 @@ const Reports = () => {
       title="Project Report"
       className={styles.reports}
       user={currentUser.user}
-    ></DashboardLayout>
+    ><ReportDisply/></DashboardLayout>
   );
 };
 

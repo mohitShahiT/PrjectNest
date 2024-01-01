@@ -16,9 +16,11 @@ const NavigationBar = ({ user }) => {
       </div>
       <div className={styles.rightsec}>
         <ul className={styles.implist}>
+          <li>
           <Link to="/dashboard">
             <a href="#dashboard">Dashboard</a>
           </Link>
+          </li>
           <li>
             <a href="#recent">
               <Recent />

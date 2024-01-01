@@ -1,14 +1,17 @@
 .navbar{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
     background-color: var(--appcolor);
     height: 65px;
     border-bottom: 1px solid #5e6872;
-    max-width: 1220px;
+    width: 100%;
 }
 .imglogo img{
-    width: 100px;
-    height: 65px;
-    align-items: center;
+    /* width: 100px;
+    height: 65px; */
+    /* align-items: center; */
 }
 .rightsec{
 width: 100%;
@@ -33,7 +36,7 @@ margin-right: 30px;
     font-weight: 500;
     font-size: 15px;
 }
-.implist a:hover{
+.implist li a:hover{
 	color: var(--lightgray);
     transition: 0.7s;
     text-decoration: underline;
@@ -77,8 +80,7 @@ margin-right: 30px;
     border: 1px solid transparent;
     border-radius: 2px;
 }
-.profilesec a:hover{
-    border: 1px solid white;
-    border-radius: 2px;
-    transition: 0.5s; 
+.profilesec li a:hover{
+    transition: 0.25s; 
+    color: grey;
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import styles from "./EditProfiledisplay.module.css";
 import axios from "axios";
+
 const EditProfiledisplay = ({ currentUser }) => {
   const [userData, setUserData] = useState({
     firstName: "",
@@ -23,14 +24,23 @@ const EditProfiledisplay = ({ currentUser }) => {
     //   })
     //   .catch((error) => console.log("Error:", error));
   }, []);
-  const handleFormSubmit = (event) => {
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+  };
+  async function handleFormSubmit(event) {
     event.preventDefault();
     const link = `http://127.0.0.1:8000/api/v1/user/update-my-info`;
-    axios.patch(
+    console.log({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+    });
+    const response = await axios.patch(
       link,
       {
-        firstName: firstName,
-        lastName: lastName,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
       },
       {
         headers: {
@@ -38,19 +48,9 @@ const EditProfiledisplay = ({ currentUser }) => {
         },
       }
     );
-  };
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setlastName] = useState("");
-  const [password, setPassword] = useState("");
-  // const [about, setAbout] = useState("");
-  const [email, setEmail] = useState("");
-  const [image, setImage] = useState(null);
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-  };
+    console.log(response);
+    window.location.reload();
+  }
 
   return (
     <div className={styles.edit_profile_container}>

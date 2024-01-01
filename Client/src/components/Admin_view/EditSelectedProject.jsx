@@ -94,12 +94,14 @@ function EditSelectedProject() {
     e.preventDefault();
   }
 
-  async function submitInfoProject() {
+  async function submitInfoProject(e) {
+    e.preventDefault();
+    console.log(`id received ${id}`);
     const link = `http://127.0.0.1:8000/api/v1/project/${id}`;
     try {
       const response = await axios.patch(
         link,
-        {},
+        { name: projectName, semester: semester, submissionDate: Date },
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("jwtToken"),
@@ -107,6 +109,7 @@ function EditSelectedProject() {
         }
       );
       console.log(response);
+      alert("Changes Saved");
     } catch (error) {
       console.error(error);
 
@@ -176,6 +179,7 @@ function EditSelectedProject() {
           },
         }
       );
+      alert("Supervisor Changed");
     } catch (err) {
       console.log(err);
     }
@@ -287,15 +291,19 @@ function EditSelectedProject() {
       <h1 className={styles.heading}>Edit Profile</h1>
       <h2 className={styles.subheading}>Basic Information</h2>
       <div className={styles.form_section}>
-        <form className={styles.form1} onSubmit={handleSubmit}>
+        <form className={styles.form1} onSubmit={submitInfoProject}>
           <label className={styles.label}>Project Title</label>
           <input
             type="text"
             className={styles.input}
-            defaultValue={projectName}
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
           ></input>
           <label className={styles.label}>Semester</label>
-          <select className={styles.input}>
+          <select
+            className={styles.input}
+            onChange={(e) => setSemester(e.target.value)}
+          >
             {Array.from({ length: 8 }, (_, index) => (
               <option
                 key={index + 1}
@@ -311,15 +319,12 @@ function EditSelectedProject() {
           <input
             type="date"
             className={styles.input}
-            defaultValue={Date}
+            value={Date}
+            onChange={(e) => setDate(e.target.value)}
           ></input>
           <div className={styles.submit}>
-            <button
-              type="submit"
-              className={styles.submitbtn}
-              value="Change"
-              onClick={submitInfoProject}
-            >
+            {console.log(`id is ${id}`)}
+            <button type="submit" className={styles.submitbtn} value="Change">
               Save Changes
             </button>
           </div>

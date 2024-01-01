@@ -20,13 +20,11 @@ const SideBar = ({ user, activeProject }) => {
           <p className={styles.project_name}>
             {activeProject ? activeProject.name : "no project to show"}
           </p>
-          <p className={styles.project_qote}></p>
         </div>
         <div className={styles.dropIcon}>
           <DropDown />
         </div>
       </div>
-      <div className={styles.separation_one}></div>
       <div className={styles.section_one}>
         <div className={styles.plan}>
           <p>

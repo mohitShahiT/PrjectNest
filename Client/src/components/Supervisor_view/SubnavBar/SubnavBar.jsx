@@ -12,13 +12,17 @@ const SubnavBar = ({ title }) => {
         <h3 className={styles.dashhead}>{title}</h3>
         <ul className={styles.subnav}>
           <li className={styles.subnavlist}>
+            <Link to="#">
             <Notifications />
-            Notifications
+              Notifications
+            </Link>
           </li>
-          <Link className={styles.subnavlist} to="/calendar">
-            <FaRegCalendarCheck />
-            Calendar
-          </Link>
+          <li className={styles.subnavlist}>
+            <Link to="/calendar">
+              <FaRegCalendarCheck />
+              Calendar
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

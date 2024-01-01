@@ -125,4 +125,30 @@ router
     projectController.getProjectLogSheets
   );
 
+router
+  .route("/:id/report")
+  .patch(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.uploadReportPdf,
+    projectController.uploadReport
+  )
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectReport
+  );
+router
+  .route("/:id/proposal")
+  .patch(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.uploadProposalPdf,
+    projectController.uploadProposal
+  )
+  .get(
+    authController.protect,
+    authController.projectMemberRestricted,
+    projectController.getProjectProposal
+  );
 module.exports = router;

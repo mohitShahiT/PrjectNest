@@ -43,7 +43,7 @@ function Sidebar() {
           !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
         }
       >
-        <Link to="#">
+        <Link to="adminprojectdetails">
           <TbListDetails size={20}/>
         {!hide ?<span className={styles.sidebarOption}>Project Details</span>:<></>}
         </Link>

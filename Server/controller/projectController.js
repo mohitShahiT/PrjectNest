@@ -7,6 +7,7 @@ const filterObject = require("../utils/filterObject");
 const GanttChart = require("../model/ganttChartModel");
 const Week = require("../model/weekModel");
 const Log = require("../model/logModel");
+const multer = require("multer");
 
 exports.getAllProjects = catchAsync(async (req, res, next) => {
   let query = {};
@@ -207,7 +208,12 @@ exports.addMembers = catchAsync(async (req, res, next) => {
   await Promise.all(pushMemberesPromises);
   await supervisedRoom.save();
   await membersRoom.save();
-  await project.save();
+  await (
+    await project.save()
+  ).populate({
+    path: "members",
+    model: "User",
+  });
 
   res.status(200).json({
     status: "success",
@@ -528,5 +534,72 @@ exports.submitProjectLogSheet = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: project.logSheets,
+  });
+});
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.split("/")[1] === "pdf") {
+    cb(null, true);
+  } else {
+    cb(new AppError(400, "not a pdf file"));
+  }
+};
+
+const multerStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/report");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname.replaceAll(" ", ""));
+  },
+});
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
+exports.uploadReportPdf = upload.single("report");
+exports.uploadProposalPdf = upload.single("proposal");
+exports.uploadReport = catchAsync(async (req, res, next) => {
+  req.project.report = req.file.filename;
+  await req.project.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      repoet: req.project.report,
+    },
+  });
+});
+
+exports.getProjectReport = catchAsync(async (req, res, next) => {
+  if (!req.project.report) {
+    return next(new AppError(404, "no report found"));
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      report: req.project.report,
+    },
+  });
+});
+exports.uploadProposal = catchAsync(async (req, res, next) => {
+  req.project.proposal = req.file.filename;
+  await req.project.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      proopsal: req.project.proposal,
+    },
+  });
+});
+
+exports.getProjectProposal = catchAsync(async (req, res, next) => {
+  if (!req.project.proposal) {
+    return next(new AppError(404, "no proposal found"));
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      proposal: req.project.proposal,
+    },
   });
 });

@@ -1,9 +1,29 @@
 import AsyncSelect from "react-select/async";
 import styles from "./EditSelectedProject.module.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { debounce } from "lodash";
+import axios from "axios";
+
+const LoadingButton = ({ children, isloading, onClick, value }) => {
+  const [loading, setLoading] = useState(isloading);
+
+  return (
+    <>
+      <button
+        style={{ backgroundColor: "red" }}
+        onClick={(e) => {
+          console.log(e.target);
+          setLoading(true); // Set loading to true when the button is clicked
+          onClick(e, value);
+        }}
+        disabled={loading} // Disable the button when loading
+      >
+        {loading ? "loading..." : children}
+      </button>
+    </>
+  );
+};
 
 let supervisorPlaceholder, teamPlaceholder;
 async function Project({
@@ -25,7 +45,6 @@ async function Project({
     });
 
     if (response.data.status === "success") {
-      console.log(response);
       setProjectName(() => response.data.data.project.name);
       setDate(
         () =>
@@ -38,7 +57,6 @@ async function Project({
       setSupervisor(() => response.data.data.project.supervisor._id);
       setMembers(() => response.data.data.project.members);
       const d = response.data.data.project.members.map((mem) => {
-        console.log({ label: mem.email, value: mem._id });
         return { label: mem.email, value: mem._id };
       });
 
@@ -58,7 +76,6 @@ function EditSelectedProject() {
   const { id } = useParams();
   const [options, setOptions] = useState([]);
   const [defaultMembersOptions, setDefaultMembersOptions] = useState([]);
-
   const handleChange = (selectedOption) => {
     console.log("handleChange", selectedOption);
     setMembers(selectedOption);
@@ -73,14 +90,124 @@ function EditSelectedProject() {
     console.log(members);
   };
 
-  function submitSupervisor(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log(supervisor);
   }
-  const submitTeam = (e) => {
+
+  async function submitInfoProject() {
+    const link = `http://127.0.0.1:8000/api/v1/project/${id}`;
+    try {
+      const response = await axios.patch(
+        link,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+      }
+    }
+  }
+  async function removeMember(e, memberId) {
     e.preventDefault();
-    console.log(members);
-  };
+    const link = `http://127.0.0.1:8000/api/v1/project/${id}/remove-member`;
+
+    try {
+      const response = await axios.patch(
+        link,
+        {
+          memberToRemove: memberId,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
+        }
+      );
+
+      setDefaultMembersOptions((prevOptions) =>
+        prevOptions.filter((mem) => mem.value !== memberId)
+      );
+    } catch (error) {
+      console.error("Error removing member:", error);
+
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+      }
+    }
+  }
+
+  async function ChangeSupervisor() {
+    const link = `http://127.0.0.1:8000/api/v1/project/${id}/add-supervisor`;
+    try {
+      const response = await axios.patch(
+        link,
+        {
+          supervisor: supervisor,
+        },
+
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async function RemoveSupervisor() {
+    const link = `http://127.0.0.1:8000/api/v1/project/${id}/remove-supervisor`;
+    try {
+      const response = await axios.patch(
+        link,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function submitChangeSupervisor() {
+    await RemoveSupervisor();
+    await ChangeSupervisor();
+  }
+
+  async function submitTeam(e) {
+    e.preventDefault();
+
+    const response = await axios.patch(
+      `http://127.0.0.1:8000/api/v1/project/${id}/add-members`,
+      {
+        newMembers: members,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+        },
+      }
+    );
+    const d = response.data.data.project.members.map((mem) => {
+      return {
+        label: mem.email,
+        value: mem._id,
+      };
+    });
+    setDefaultMembersOptions(d);
+  }
   const debouncedLoadOptions1 = debounce(async (searchValue, callback) => {
     try {
       const link = `http://localhost:8000/api/v1/user/?email=${searchValue}&role=student`;
@@ -92,24 +219,22 @@ function EditSelectedProject() {
       });
 
       if (response.data.status === "success") {
-        const newOptions = response.data.data.users.map((user) => {
-          return {
-            label: user.email,
-            value: user._id,
-          };
+        const addedMembersIds = members.map((mem) => mem.value);
+        const currentUserIds = defaultMembersOptions.map((mem) => mem.value);
+        const newOptions = [];
+        response.data.data.users.forEach((user) => {
+          if (!currentUserIds.includes(user._id)) {
+            newOptions.push({ label: user.email, value: user._id });
+          }
         });
-        console.log(searchValue, newOptions);
         callback(newOptions);
         setOptions(newOptions);
-        console.log(options);
       } else {
         console.log("No search found");
       }
     } catch (error) {
       alert(error);
     }
-
-    console.log("loadOptions", searchValue, options);
   }, 1000);
   const debouncedLoadOptions2 = debounce(async (searchValue, callback) => {
     try {
@@ -121,8 +246,6 @@ function EditSelectedProject() {
         },
       });
 
-      console.log(response);
-
       if (response.data.status === "success") {
         const newOptions = response.data.data.users.map((user) => {
           return {
@@ -130,18 +253,14 @@ function EditSelectedProject() {
             value: user._id,
           };
         });
-        console.log(searchValue, newOptions);
         callback(newOptions);
         setOptions(newOptions);
-        console.log(options);
       } else {
         console.log("No search found");
       }
     } catch (error) {
       alert(error);
     }
-
-    console.log("loadOptions", searchValue, options);
   }, 1000);
 
   const loadOptions1 = (searchValue, callback) => {
@@ -162,49 +281,45 @@ function EditSelectedProject() {
       setDefaultMembersOptions,
     });
   }, []);
-  console.log(supervisor);
   let d = defaultMembersOptions;
-  console.log(d);
   return (
     <div className={styles.edit_profile_form_container}>
       <h1 className={styles.heading}>Edit Profile</h1>
       <h2 className={styles.subheading}>Basic Information</h2>
       <div className={styles.form_section}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label}>Project Title</label>
           <input
             type="text"
             className={styles.input}
-            value={projectName}
+            defaultValue={projectName}
           ></input>
           <label className={styles.label}>Semester</label>
-          <select className={styles.input} value={semester}>
-            {/* <option>1st Semester</option>
-            <option>2nd Semester</option>
-            <option>3rd Semester</option>
-            <option>4th Semester</option>
-            <option>5th Semester</option>
-            <option>6th Semester</option>
-            <option>7th Semester</option>
-            <option>8th Semester</option> */}
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
+          <select className={styles.input}>
+            {Array.from({ length: 8 }, (_, index) => (
+              <option
+                key={index + 1}
+                value={index + 1}
+                selected={semester === index + 1}
+              >
+                {index + 1}
+              </option>
+            ))}
           </select>
 
           <label className={styles.label}>Date</label>
-          <input type="date" className={styles.input} value={Date}></input>
+          <input
+            type="date"
+            className={styles.input}
+            defaultValue={Date}
+          ></input>
           <div className={styles.submit}>
-            <input
+            <button
               type="submit"
               className={styles.submitbtn}
               value="Change"
-            ></input>
+              onClick={submitInfoProject}
+            ></button>
           </div>
         </form>
         <hr />
@@ -212,18 +327,19 @@ function EditSelectedProject() {
         <h1 className={styles.heading}>Critical Section</h1>
         <h2 className={styles.subheading}>Change Supervisor</h2>
         <div className={styles.form_section}>
-          <form className={styles.form} onSubmit={submitSupervisor}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <AsyncSelect
               loadOptions={loadOptions2}
               onChange={handleChangeSelect}
               placeholder={supervisorPlaceholder}
             />
             <div className={styles.submit}>
-              <input
+              <button
                 type="submit"
                 value="Change Supervisor"
                 className={styles.submitbtn}
-              ></input>
+                onClick={submitChangeSupervisor}
+              ></button>
             </div>
           </form>
           <h2 className={styles.subheading}>Add New Team Members</h2>
@@ -235,20 +351,37 @@ function EditSelectedProject() {
               onChange={handleChangeMultiSelect}
             />
             <div className={styles.submit}>
-              <input
+              <button
                 type="submit"
                 className={styles.submitbtn}
                 value="Change Team Members"
-              ></input>
+              >
+                Add Members
+              </button>
             </div>
           </form>
-          <form className={styles.removeTeamMembers}>
+          <form
+            className={styles.removeTeamMembers}
+            onSubmit={(e) => handleSubmit(e)}
+          >
             <h2>Remove Team Members</h2>
             {console.log(defaultMembersOptions.map((mem) => mem.label))}
             <ul className={styles.addedmembers}>
               {defaultMembersOptions.map((mem) => (
-                <li key={mem.value}>{mem.label}
-                <span className={styles.removebtn}></span></li>
+                <li key={mem.value}>
+                  {mem.label}
+                  <span className={styles.removebtn}>
+                    {" "}
+                    {console.log(mem)}
+                    <LoadingButton
+                      isloading={false}
+                      onClick={removeMember}
+                      value={mem.value}
+                    >
+                      Remove
+                    </LoadingButton>
+                  </span>
+                </li>
               ))}
             </ul>
           </form>

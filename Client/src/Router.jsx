@@ -51,6 +51,10 @@ function Router() {
           <Route path="addproject" element={<Adminaddproject />} />
           <Route path="editproject" element={<Admineditproject />}></Route>
           <Route
+            path="adminprojectdetails"
+            element={<projectdetails />}
+          ></Route>
+          <Route
             path="editproject/:id"
             element={<AdmineditSelectedproject />}
           />

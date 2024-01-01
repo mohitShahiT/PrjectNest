@@ -1,36 +1,28 @@
-/* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react";
+import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
 import axios from "axios";
 import styles from "./Admin_editproject.module.css";
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { MdEditDocument } from "react-icons/md";
-import AuthContext from "../LoginPage/AuthProvider/AuthProvider";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
-function EditProject() {
+async function ProjectList(setProjects) {
+  try {
+    const response = await axios.get("http://localhost:8000/api/v1/project", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+      },
+    });
+    console.log(response);
+    setProjects(response.data.data.projects);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function Adminprojectsdetails() {
   const [projects, setProjects] = useState([]);
   const currentUser = useContext(AuthContext);
   useEffect(() => {
     ProjectList(setProjects);
   }, []);
-  async function deleteProject(id) {
-    try {
-      const link = `http://127.0.0.1:8000/api/v1/project/${id}`;
-      const response = await axios.delete(
-        link,
-
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-          },
-        }
-      );
-      console.log(response);
-      ProjectList(setProjects);
-    } catch (err) {
-      console.log(err);
-    }
-  }
   return (
     <div className={styles.adminprojectcontainer}>
       <div className={styles.edit_project}>
@@ -38,10 +30,6 @@ function EditProject() {
           <div className={styles.project_card}>
             <div className={styles.projectCardHeader}>
               <h3 className={styles.project_title}>{project.name}</h3>
-              <Link to={`/admin/editproject/${project._id}`}>
-                <MdEditDocument />
-              </Link>
-              <RiDeleteBin6Line onClick={() => deleteProject(project._id)} />
             </div>
 
             <div className={styles.projectsemester}>
@@ -77,19 +65,4 @@ function EditProject() {
     </div>
   );
 }
-
-async function ProjectList(setProjects) {
-  try {
-    const response = await axios.get("http://localhost:8000/api/v1/project", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-      },
-    });
-    console.log(response);
-    setProjects(response.data.data.projects);
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export default EditProject;
+export default Adminprojectsdetails;

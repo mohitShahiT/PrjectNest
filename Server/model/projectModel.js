@@ -8,17 +8,6 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: [true, "project must have a name"],
     },
-    // year: {
-    //   type: Number,
-    //   validate: {
-    //     validator: function (val) {
-    //       if (!Number.isInteger(val)) return false;
-    //       return !(val < 1 || val > 4);
-    //     },
-    //     message: "{VALUE} is not a valid year number",
-    //   },
-    //   integer: true,
-    // },
     semester: {
       type: Number,
       validate: {
@@ -29,7 +18,12 @@ const projectSchema = new mongoose.Schema(
       },
       message: "{VALUE} is not a valid semster number",
     },
-
+    report: {
+      type: String,
+    },
+    proposal: {
+      type: String,
+    },
     description: {
       type: String,
     },

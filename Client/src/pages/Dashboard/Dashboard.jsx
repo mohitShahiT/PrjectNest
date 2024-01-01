@@ -5,6 +5,7 @@ import DashboardLayout from "../../components/Supervisor_view/DashboardLayout/Da
 
 const Dashboard = () => {
   const currentUser = useContext(AuthContext);
+  console.log(currentUser.user);
   // useEffect(() => {
   //   currentUser.getUser();
   // }, []);

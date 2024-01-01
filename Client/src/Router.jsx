@@ -6,7 +6,7 @@ import Adminaddproject from "./pages/Adminaddproject/Adminaddproject";
 import Admineditproject from "./pages/Admineditproject/Admineditproject";
 import AdmineditSelectedproject from "./pages/Admineditproject/AdmineditSelectedproject";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Chat from "./pages/Chat/Chat";
+// import Chat from "./pages/Chat/JoinPage";
 import Reports from "./pages/Reports/Reports";
 import Logsheet from "./pages/Logsheet/Logsheet";
 import Members from "./pages/Members/Members";
@@ -21,6 +21,11 @@ import StudentReports from "./pages/StudentReports/StudentReports";
 import StudentTask from "./pages/StudentTask/StudentTask";
 import StudentLogsheet from "./pages/StudentLogsheet/StudentLogsheet";
 import StudentEditProfile from "./pages/StudentEditProfile/StudentEditProfile";
+// import Chatdisplay from "./pages/Chat/components/Chatdisplay/Chatdisplay";
+import ChatPage from "./pages/Chat/ChatPage/ChatPage";
+import JoinPage from "./pages/Chat/JoinPage/JoinPage";
+import StdJoinPage from "./pages/StudentChat/StdJoinPage/StdJoinPage";
+import StdChatPage from "./pages/StudentChat/StdChatPage/StdChatPage";
 
 function Router() {
   const currentUser = useContext(AuthContext);
@@ -56,15 +61,19 @@ function Router() {
         <Route path="*" element={<Errorpage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/reports" element={<Reports />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat" element={<JoinPage />} />
         <Route path="/logsheet" element={<Logsheet />} />
         <Route path="/members" element={<Members />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/task" element={<Task />} />
         <Route path="/calendar" element={<Calendar />} />
+        {/* <Route path="/join" element={<Join />} /> */}
+        <Route path="/groupchat" element={<ChatPage />} />
+
         <Route path="/studentdashboard" element={<StudentDashboard />} />
         <Route path="/studentreports" element={<StudentReports />} />
-        {/* <Route path="/studentchat" element={<StudentChat />} /> */}
+        <Route path="/studentchat" element={<StdJoinPage />} />
+        <Route path="/studentgroupchat" element={<StdChatPage />} />
         <Route path="/studentlogsheet" element={<StudentLogsheet />} />
         <Route path="/studentmembers" element={<StudentMembers />} />
         <Route path="/studenteditprofile" element={<StudentEditProfile />} />

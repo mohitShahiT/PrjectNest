@@ -20,6 +20,7 @@ const DashboardLayout = ({ title, children, user }) => {
             },
           }
         );
+        console.log(response);
         if (response.data.status === "success") {
           setActiveProject(response.data.projects[0]);
         }
@@ -30,6 +31,7 @@ const DashboardLayout = ({ title, children, user }) => {
 
     fetch();
   }, []);
+  console.log(activeProject);
 
   return (
     <div className={styles.dashboardlayout}>

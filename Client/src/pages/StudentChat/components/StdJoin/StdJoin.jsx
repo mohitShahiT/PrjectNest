@@ -1,7 +1,7 @@
 // Join.js
 
 import React, { useState } from "react";
-import styles from "./Join.module.css"; // Import CSS module
+import styles from "./StdJoin.module.css"; // Import CSS module
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const sendUser = () => {
   user = document.getElementById("joinInput").value;
   document.getElementById("joinInput").value = "";
 };
-const Join = () => {
+const StdJoin = () => {
   const [name, setname] = useState("");
 
   return (
@@ -28,7 +28,7 @@ const Join = () => {
         />
         <Link
           onClick={(event) => (!name ? event.preventDefault() : null)}
-          to="/groupchat"
+          to="/studentgroupchat"
         >
           <button onClick={sendUser} className={styles.joinbtn}>
             Join Now
@@ -39,5 +39,5 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default StdJoin;
 export { user };

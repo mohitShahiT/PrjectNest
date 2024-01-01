@@ -6,7 +6,7 @@ const CatchPhrase = () => {
         Manage Your Project Conveniently Like Never Before
       </span>
       <div className={styles.join_message}>
-        <h2 className={styles.text} style={{ width: "100%" }}>
+        <h2 className={styles.text} style={{ width: "80%" }}>
           Join Today.
         </h2>
       </div>

@@ -6,6 +6,7 @@
   padding: 20px;
   border-right: 0.5px solid rgb(116, 107, 107);
   text-decoration: none;
+  height: 90vh;
 }
 .sidebaritem a,
 .hidesidebaritems a {
@@ -14,7 +15,7 @@
   justify-content: center;
   text-decoration: none;
   color: white;
-  gap: 25px;
+  /* gap: 25px; */
 }
 .sidebaritem {
   display: flex;
@@ -35,7 +36,7 @@
   padding: 10px;
   text-align: justify;
   border-right: 1px solid grey;
-  height: 100vh;
+  height: 90vh;
 }
 .hidesidebaritems {
   margin-bottom: 1rem;
@@ -46,9 +47,9 @@
 /* .icons {
   font-size: large;
 } */
-#sidebar_toggler {
+/* #sidebar_toggler {
   margin-top: 15em;
-}
+} */
 .sidebarOption {
   color: white; /* Set the default color for links to white */
   text-decoration: none; /* Remove underline from links */

@@ -16,47 +16,65 @@ function Sidebar() {
 
   return (
     <div className={!hide ? `${styles.sidebar}` : `${styles.hidesidebar}`}>
-      <div
-        className={
-          !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
-        }
-      >
-        <Link to="addproject">
-          <MdOutlineAssignment size={20} />
-          {!hide ?<span className={styles.sidebarOption}>Add Project</span>:<></>}
-        </Link>
-      </div>
-      <div
-        className={
-          !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
-        }
-      >
-        <Link to="editproject">
-          <FiEdit size={20}/>
+      <div className={styles.sideBarItemContainer}>
+        <div
+          className={
+            !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
+          }
+        >
+          <Link to="addproject">
+            <MdOutlineAssignment size={20} />
+            {!hide ? (
+              <span className={styles.sidebarOption}>Add Project</span>
+            ) : (
+              <></>
+            )}
+          </Link>
+        </div>
+        <div
+          className={
+            !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
+          }
+        >
+          <Link to="editproject">
+            <FiEdit size={20} />
 
-          {!hide?<span className={styles.sidebarOption}>Edit Project</span>:<></>}
-        </Link>
-      </div>
+            {!hide ? (
+              <span className={styles.sidebarOption}>Edit Project</span>
+            ) : (
+              <></>
+            )}
+          </Link>
+        </div>
 
-      <div
-        className={
-          !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
-        }
-      >
-        <Link to="adminprojectdetails">
-          <TbListDetails size={20}/>
-        {!hide ?<span className={styles.sidebarOption}>Project Details</span>:<></>}
-        </Link>
-      </div>
-      <div
-        className={
-          !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
-        }
-      >
-        <Link to="#">
-          <FiSettings size={20}/>
-        {!hide? <span className={styles.sidebarOption}>Settings</span>:<></>}
-      </Link>
+        <div
+          className={
+            !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
+          }
+        >
+          <Link to="adminprojectdetails">
+            <TbListDetails size={20} />
+            {!hide ? (
+              <span className={styles.sidebarOption}>Project Details</span>
+            ) : (
+              <></>
+            )}
+          </Link>
+        </div>
+        <div
+          className={
+            !hide ? `${styles.sidebaritem}` : `${styles.hidesidebaritems}`
+          }
+        >
+          <Link to="settings">
+            <FiSettings size={20} />
+            {!hide ? (
+              <span className={styles.sidebarOption}>Settings</span>
+            ) : (
+              <></>
+            )}
+          </Link>
+        </div>
       </div>
       <div
         className={styles.sidebaritem}
@@ -65,12 +83,12 @@ function Sidebar() {
       >
         {!hide ? (
           <>
-              {" "}
-              <BiArrowBack size={20} />{" "}
+            {" "}
+            <BiArrowBack size={20} />{" "}
           </>
         ) : (
           <>
-              <IoMdArrowForward size={30} />
+            <IoMdArrowForward size={30} />
           </>
         )}
       </div>

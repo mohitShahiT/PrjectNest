@@ -1,5 +1,5 @@
-import Adminprojectsdetails from "../../components/Admin_view/Adminprojectsdetails";
-function projectdetails() {
-  return <Adminprojectsdetails />;
+import Projectsdetails from "../../components/Admin_view/projectsdetails";
+function Adminprojectsdetails() {
+  return <Projectsdetails />;
 }
-export default projectdetails;
+export default Adminprojectsdetails;

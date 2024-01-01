@@ -31,7 +31,7 @@ const SignInform = ({ clicked, handleClick }) => {
         setUser({ auth: true, name: res.data.data.user.email });
         if (res.data.data.user.role === "admin") {
           console.log("decoding Ravi");
-          navigate("/admin");
+          navigate("/admin/addproject");
         }
         if (res.data.data.user.role === "supervisor" || res.data.data.user.role === "student") {
           navigate("/dashboard");

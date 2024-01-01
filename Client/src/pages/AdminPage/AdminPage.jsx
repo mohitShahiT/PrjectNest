@@ -7,17 +7,19 @@ import AuthContext from "../../components/LoginPage/AuthProvider/AuthProvider";
 
 function AdminPage() {
   const currentUser = useContext(AuthContext);
-  return (currentUser.user && currentUser.user.role === "admin"?
+  return currentUser.user && currentUser.user.role === "admin" ? (
     <>
+      {console.log(currentUser.user._id)}
       <Navbar />
       <div className={styles.pagesplit}>
         <Sidebar />
         <Outlet />
       </div>
-    </>:
-    <>
-    <div>You are not logged in as admin</div>
     </>
-);
+  ) : (
+    <>
+      <div>You are not logged in as admin</div>
+    </>
+  );
 }
 export default AdminPage;

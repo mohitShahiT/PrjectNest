@@ -30,7 +30,7 @@
   color: var(--lightgray);
 } */
 
-.dropIcon{
+.dropIcon {
   display: flex;
 }
 .section_one {
@@ -39,17 +39,18 @@
   gap: 20px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 .section_one li {
   list-style: none;
   color: var(--white);
+  text-decoration: none;
 }
 .plan {
   color: var(--lightgray);
   font-size: 13px;
   font-weight: 500;
-  margin-top: 9px;
+  margin-top: 20px;
   display: flex;
   letter-spacing: 2px;
 }
@@ -58,22 +59,24 @@
   font-size: 15px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   padding: 0;
 }
 .listitems {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
-  font-size: 15.5px;
+  font-size: 16px;
   box-shadow: 0px 8px 16px 0px rgba(39, 35, 35, 0.2);
   padding: 0.4em 0.6em;
   transition: 0.1s ease;
   border: 1px solid var(--appcolor);
   background-color: #032f61;
   border-radius: 6px;
+  text-decoration: none;
+  color: var(--white);
 
   /* display: flex;
     gap: 18px;
@@ -116,20 +119,20 @@
   font-size: 15px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
   padding: 0;
 }
 .doingstxt {
   color: var(--lightgray);
   font-size: 13.5px;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   letter-spacing: 1px;
 }
 .doinglist {
   display: flex;
-  gap: 10px;
+  gap: 30px;
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;

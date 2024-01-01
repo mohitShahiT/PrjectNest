@@ -5,12 +5,14 @@ import Errorpage from "./pages/Errrorpage/Errorpage";
 import Adminaddproject from "./pages/Adminaddproject/Adminaddproject";
 import Admineditproject from "./pages/Admineditproject/Admineditproject";
 import AdmineditSelectedproject from "./pages/Admineditproject/AdmineditSelectedproject";
+import Adminprojectdetails from "./pages/Adminprojectsdetails/Adminprojectsdetails";
 import Dashboard from "./pages/Dashboard/Dashboard";
 // import Chat from "./pages/Chat/JoinPage";
 import Reports from "./pages/Reports/Reports";
 import Logsheet from "./pages/Logsheet/Logsheet";
 import Members from "./pages/Members/Members";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import Adminsettings from "./pages/Adminsettings/Adminsettings";
 import Task from "./pages/Task/Task";
 import Calendar from "./pages/Calendar/Calendar";
 import { useContext } from "react";
@@ -52,12 +54,13 @@ function Router() {
           <Route path="editproject" element={<Admineditproject />}></Route>
           <Route
             path="adminprojectdetails"
-            element={<projectdetails />}
+            element={<Adminprojectdetails />}
           ></Route>
           <Route
             path="editproject/:id"
             element={<AdmineditSelectedproject />}
           />
+          <Route path="settings" element={<Adminsettings />} />
         </Route>
         {/* </>) */}
         {/* } */}

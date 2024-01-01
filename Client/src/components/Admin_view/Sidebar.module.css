@@ -12,10 +12,9 @@
 .hidesidebaritems a {
   display: flex;
   align-items: center;
-  justify-content: center;
   text-decoration: none;
   color: white;
-  /* gap: 25px; */
+  gap: 25px;
 }
 .sidebaritem {
   display: flex;

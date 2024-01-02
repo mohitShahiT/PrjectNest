@@ -8,6 +8,7 @@ const Reportsdisplay = () => {
   const [reportPdf, setReportPdf] = useState("");
   const [activeProject, setActiveProject] = useState(undefined);
   const [currentReport, setCurrentReport] = useState(undefined);
+  const [fileUploading, setFileUploading] = useState(false);
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -48,36 +49,38 @@ const Reportsdisplay = () => {
     fetch();
   }, []);
 
-  // if (activeProject) {
-  //   const fetchCurrentReport = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://127.0.0.1:8000/api/v1/project/${activeProject._id}/report`,
-  //         {
-  //           headers: {
-  //             Authorization: "Bearer " + localStorage.getItem("jwtToken"),
-  //           },
-  //         }
-  //       );
-  //       console.log(response.data);
-  //       if (response.data.status === "success") {
-  //         setCurrentReport(response.data.data.report);
-  //       }
-  //       setCurrentReport(undefined);
-  //     } catch (e) {
-  //       setCurrentReport(undefined);
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchCurrentReport();
-  // }
+
+  useEffect(()=>{
+    const fetchCurrentReport = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/v1/project/${activeProject._id}/report`,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.status === "success") {
+          setCurrentReport(response.data.data.report);
+        }
+      } catch (e) {
+        setCurrentReport(undefined);
+        console.log(e);
+      }
+    };
+    fetchCurrentReport();
+  }
+
+  ,[activeProject])
+    
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    setFileUploading(true);
+    let formData = new FormData();
     formData.append("report", reportPdf);
-    // formData["report"] = reportPdf;
-    console.log(reportPdf, formData);
     try {
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/v1/project/${activeProject._id}/report`,
@@ -90,28 +93,32 @@ const Reportsdisplay = () => {
         }
       );
       console.log(response);
+      if(response.data.status === "success") {
+        setFileUploading(false)
+        setActiveProject({...activeProject});
+      }
     } catch (e) {
       console.log(e);
     }
   };
   const handleChange = (e) => {
-    console.log(reportPdf);
-    setReportPdf(e.target.value);
+    // console.log(e.target.files[0]);
+    setReportPdf(e.target.files[0]);
   };
   return (
     <div className={styles.reportsdisplay}>
-      {currentReport ? currentReport : "no report"}
+      <div className={styles.reportBtn}>{currentReport ? (<a href={"http://localhost:8000/public/report/" + currentReport} rel="noopener noreferrer" target="_blank" >view report</a>) : "no report"}</div>
+      <div className="gantttxt">
       {activeProject ? (
-        <div className="gantttxt">
           <form className={styles.reportscontainer} onSubmit={handleSubmit}>
-            <h2 className={styles.reportheader}>Upload Your Report Here</h2>
+            {currentReport?(<h2 className={styles.reportheader}>Upload New Report From Here</h2>):(<h2 className={styles.reportheader}>Upload Your Report Here</h2>)}
             <input type="file" onChange={handleChange}></input>
-            <button type="submit">Submit Now</button>
+            <button disabled={fileUploading} type="submit">{fileUploading?"Uploading...": "Upload"}</button>
           </form>
-        </div>
       ) : (
-        "loading.."
-      )}
+        "loading..."
+        )}
+      </div>
     </div>
   );
 };

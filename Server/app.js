@@ -19,6 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/public", express.static("public"));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/project", projectRouter);
 app.use("/api/v1/room", roomRouter);

@@ -94,7 +94,7 @@ const EditProfiledisplay = ({ currentUser }) => {
           <label className={styles.labels}>
             Email:
             <input
-              className={styles.inputFields}
+              className={styles.emailInputField}
               type="email"
               value={userData.email}
               readOnly

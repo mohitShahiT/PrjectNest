@@ -5,3 +5,24 @@
   flex-direction: column;
   background-color: white;
 }
+.reportsdisplay {
+  height: 100vh;
+  background-color: var(--appcolor);
+  /* justify-content: center; */
+  align-items: center;
+  padding: 20px;
+}
+.reportscontainer {
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  height: 20rem;
+  border-radius: 5px;
+  gap: 20px;
+  background-color: #032f61;
+  padding: 30px;
+  margin-top: 3rem;
+}
+.reportheader {
+  color: white;
+}

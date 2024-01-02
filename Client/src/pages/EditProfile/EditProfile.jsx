@@ -6,9 +6,14 @@ import AuthContext from "../../components/LoginPage/AuthProvider/AuthProvider";
 
 const EditProfile = () => {
   const currentUser = useContext(AuthContext);
+  console.log(currentUser);
   return (
     <DashboardLayout title="Edit Profile" user={currentUser.user}>
-      <EditProfiledisplay />
+      {!currentUser.user ? (
+        "loading"
+      ) : (
+        <EditProfiledisplay currentUser={currentUser} />
+      )}
     </DashboardLayout>
   );
 };

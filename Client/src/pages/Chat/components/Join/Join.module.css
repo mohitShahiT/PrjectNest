@@ -1,7 +1,8 @@
 /* Join.module.css */
 
 .JoinPage {
-  width: 70vw;
+  background-color: var(--appcolor);
+  width: 100%;
   height: 80vh;
   display: flex;
   justify-content: center;
@@ -9,9 +10,7 @@
 }
 
 .JoinContainer {
-  background-color: #032f61;
-  width: 80%;
-  height: 80%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;

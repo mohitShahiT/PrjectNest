@@ -39,7 +39,13 @@ input[type="file"] {
 .labels {
   margin-bottom: 20px;
 }
-
+.emailInputField {
+  width: 100%; /* Adjusted width for better responsiveness */
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: black;
+}
 .inputFields,
 textarea {
   width: 100%; /* Adjusted width for better responsiveness */
@@ -60,4 +66,3 @@ textarea {
 button:hover {
   background-color: #0056b3;
 }
-

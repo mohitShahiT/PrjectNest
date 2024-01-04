@@ -8,7 +8,6 @@ const Reportsdisplay = () => {
   const [reportPdf, setReportPdf] = useState("");
   const [activeProject, setActiveProject] = useState(undefined);
   const [currentReport, setCurrentReport] = useState(undefined);
-  const [fileUploading, setFileUploading] = useState(false);
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -49,8 +48,7 @@ const Reportsdisplay = () => {
     fetch();
   }, []);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const fetchCurrentReport = async () => {
       try {
         const response = await axios.get(
@@ -71,10 +69,7 @@ const Reportsdisplay = () => {
       }
     };
     fetchCurrentReport();
-  }
-
-  ,[activeProject])
-    
+  }, [activeProject]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,9 +88,9 @@ const Reportsdisplay = () => {
         }
       );
       console.log(response);
-      if(response.data.status === "success") {
-        setFileUploading(false)
-        setActiveProject({...activeProject});
+      if (response.data.status === "success") {
+        setFileUploading(false);
+        setActiveProject({ ...activeProject });
       }
     } catch (e) {
       console.log(e);
@@ -107,8 +102,20 @@ const Reportsdisplay = () => {
   };
   return (
     <div className={styles.reportsdisplay}>
-      <div className={styles.reportBtn}>{currentReport ? (<a href={"http://localhost:8000/public/report/" + currentReport} rel="noopener noreferrer" target="_blank" >view report</a>) : "no report"}</div>
-      <div className="gantttxt">
+      <div className={styles.reportBtn}>
+        {currentReport ? (
+          <a
+            href={"http://localhost:8000/public/report/" + currentReport}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            view report
+          </a>
+        ) : (
+          "no report"
+        )}
+      </div>
+      {/* <div className="gantttxt">
       {activeProject ? (
           <form className={styles.reportscontainer} onSubmit={handleSubmit}>
             {currentReport?(<h2 className={styles.reportheader}>Upload New Report From Here</h2>):(<h2 className={styles.reportheader}>Upload Your Report Here</h2>)}
@@ -118,7 +125,7 @@ const Reportsdisplay = () => {
       ) : (
         "loading..."
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

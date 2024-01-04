@@ -59,9 +59,11 @@ const EditProfiledisplay = ({ currentUser }) => {
         <input type="file" onChange={handleImageUpload} accept="image/*" />
         <h3>Ravi Pajiyar</h3>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos id,
-          unde delectus amet eius nostrum rerum fugiat quaerat reiciendis at
-          harum explicabo distinctio expedit
+          Ravi Pajiyar, a passionate computer engineering undergrad, thrives on
+          coding and adores web development, machine learning, and AI. With a
+          keen interest in programming, Ravi explores the intricate realms of
+          technology, driven by an insatiable curiosity and a fervent desire to
+          innovate.
         </p>
       </div>
       <div className={styles.right_section}>

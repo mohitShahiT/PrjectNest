@@ -1,6 +1,6 @@
 .edit_profile_container {
   width: 55rem;
-  height: 30rem;
+  height: 26.5rem;
   display: flex;
   margin-top: 25px;
   justify-content: space-around;
@@ -30,23 +30,17 @@ input[type="file"] {
   margin-bottom: 10px;
 }
 
-.form {
+form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.labels {
+label {
   margin-bottom: 20px;
 }
-.emailInputField {
-  width: 100%; /* Adjusted width for better responsiveness */
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  color: black;
-}
-.inputFields,
+
+input,
 textarea {
   width: 100%; /* Adjusted width for better responsiveness */
   padding: 8px;
@@ -54,7 +48,7 @@ textarea {
   border: 1px solid #ccc;
 }
 
-.saveChange {
+button {
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;

@@ -17,7 +17,9 @@ const Profiledropdown = ({ userDetails }) => {
   const closeDropdown = () => {
     setIsOpen(false);
   };
-
+  const logout = () => {
+    localStorage.removeItem("jwtToken");
+  };
   return (
     <div className={styles.profile_dropdown}>
       <div className={styles.profile_icon} onClick={toggleDropdown}>
@@ -38,9 +40,9 @@ const Profiledropdown = ({ userDetails }) => {
                 <div className={styles.email}>{userDetails.email}</div>
               </Link>
             </li>
-            <li className={styles.listacc}>
+            <Link onClick={logout} to="/" className={styles.listacc}>
               Log Out <MdLogout fontSize={"22px"} />
-            </li>
+            </Link>
             <li className={styles.listacc}>
               Delete Account <IoMdRemoveCircle fontSize={"22px"} />
             </li>

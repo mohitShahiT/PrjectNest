@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styles from "./StudentTaskdisplay.module.css";
-
+import AuthContext from "../../../../components/LoginPage/AuthProvider/AuthProvider";
 const StudentTaskdisplay = () => {
+  const currentUser = useContext(AuthContext);
+  console.log(currentUser);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [taskData, setTaskData] = useState({
     assignTasks: [],
@@ -100,14 +102,16 @@ const StudentTaskdisplay = () => {
       console.error("Error sending data to the backend:", error);
     }
   };
-  const inputs = activeProject?.members.map((mem) => {
-    return {
-      id: mem._id,
-      name: "Assigned Task",
-      label: `${mem.firstName} ${mem.lastName}`,
-      placeholder: `Task for ${mem.firstName}`,
-      type: "textarea",
-    };
+  const inputs = [];
+  activeProject?.members.forEach((mem) => {
+    if (mem._id === currentUser?.user._id)
+      inputs.push({
+        id: mem._id,
+        name: "Assigned Task",
+        label: `${mem.firstName} ${mem.lastName}`,
+        placeholder: `Task completed by you`,
+        type: "textarea",
+      });
   });
 
   const [values, setValues] = useState({});
@@ -134,7 +138,7 @@ const StudentTaskdisplay = () => {
                   <thead>
                     <tr>
                       <th>Members</th>
-                      <th>Assign Task</th>
+                      <th>Complete Task</th>
                     </tr>
                   </thead>
                   <tbody>

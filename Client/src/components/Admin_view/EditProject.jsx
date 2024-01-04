@@ -92,7 +92,7 @@ function ProjectCard({ id, project, ProjectList, setProjects }) {
           </p>
           <p className={styles.prow}>
             <span className={styles.labels}>Project Supervisor:</span>
-            {project.supervisor.firstName}
+            {project.supervisor?.firstName}
           </p>
           <p className={styles.prow}>
             <span className={styles.labels}>Submission Date:</span>

@@ -33,11 +33,14 @@ const SignInform = ({ clicked, handleClick }) => {
           console.log("decoding Ravi");
           navigate("/admin/addproject");
         }
-        if (res.data.data.user.role === "supervisor" || res.data.data.user.role === "student") {
-          navigate("/dashboard");
+        if (
+          res.data.data.user.role === "supervisor" ||
+          res.data.data.user.role === "student"
+        ) {
+          navigate("/task");
         }
         if (res.data.data.user.role === "student") {
-          navigate("/studentdashboard");
+          navigate("/studenttask");
         }
       })
       .catch((err) => {

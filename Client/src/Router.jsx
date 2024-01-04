@@ -23,6 +23,7 @@ import StudentReports from "./pages/StudentReports/StudentReports";
 import StudentTask from "./pages/StudentTask/StudentTask";
 import StudentLogsheet from "./pages/StudentLogsheet/StudentLogsheet";
 import StudentEditProfile from "./pages/StudentEditProfile/StudentEditProfile";
+import StudentCalendar from "./pages/StudentCalendar/StudentCalendar";
 // import Chatdisplay from "./pages/Chat/components/Chatdisplay/Chatdisplay";
 import ChatPage from "./pages/Chat/ChatPage/ChatPage";
 import JoinPage from "./pages/Chat/JoinPage/JoinPage";
@@ -64,8 +65,8 @@ function Router() {
         </Route>
         {/* </>) */}
         {/* } */}
-
         <Route path="*" element={<Errorpage />} />
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/chat" element={<JoinPage />} />
@@ -85,7 +86,7 @@ function Router() {
         <Route path="/studentmembers" element={<StudentMembers />} />
         <Route path="/studenteditprofile" element={<StudentEditProfile />} />
         <Route path="/studenttask" element={<StudentTask />} />
-        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/studentcalendar" element={<StudentCalendar />} />
       </Routes>
     </BrowserRouter>
   );

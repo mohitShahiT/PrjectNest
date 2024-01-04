@@ -13,7 +13,7 @@ const SubnavBar = ({ title }) => {
         <ul className={styles.subnav}>
           <li className={styles.subnavlist}>
             <Link to="#">
-            <Notifications />
+              <Notifications />
               Notifications
             </Link>
           </li>

@@ -13,24 +13,31 @@
   align-items: center;
   padding: 20px;
 }
-.reportBtn{
-  background-color: black;
+.reportBtn {
+  margin-top: 10rem;
   padding: 10px;
   text-decoration: none;
   color: white;
+  font-size: 23px;
+  width: 12rem;
+  height: 3.5rem;
+  background-color: #032f61;
+  border-radius: 5px;
+  text-align: center;
+  justify-content: center;
 }
-.reportBtn a{
+.reportBtn a {
   color: white;
   text-decoration: none;
 }
-.reportsdisplay a:hover{
+.reportsdisplay a:hover {
   text-decoration: underline;
 }
 .reportscontainer {
   width: 30rem;
   display: flex;
   flex-direction: column;
-  height: 20rem;
+  height: 14rem;
   border-radius: 5px;
   gap: 20px;
   background-color: #032f61;

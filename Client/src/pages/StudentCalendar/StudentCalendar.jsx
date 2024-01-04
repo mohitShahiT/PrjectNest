@@ -1,20 +1,20 @@
+import styles from "./StudentCalendar.module.css";
 import StdDashboardLayout from "../../components/Student_view/StdDashboardLayout/StdDashboardLayout";
-import styles from "./StudentReports.module.css";
+import StudentCalendardisplay from "./components/StudentCalendardisplay/StudentCalendardisplay";
 import AuthContext from "../../components/LoginPage/AuthProvider/AuthProvider";
 import { useContext } from "react";
-import StudentReportDisplay from "./components/StudentReportsdisplay/StudentReportsdisplay";
 
-const Reports = () => {
+const Calendar = () => {
   const currentUser = useContext(AuthContext);
   return (
     <StdDashboardLayout
-      title="Project Report"
-      className={styles.reports}
+      title="Calendar"
+      className={styles.calendar}
       user={currentUser.user}
     >
-      <StudentReportDisplay />
+      <StudentCalendardisplay />
     </StdDashboardLayout>
   );
 };
 
-export default Reports;
+export default Calendar;

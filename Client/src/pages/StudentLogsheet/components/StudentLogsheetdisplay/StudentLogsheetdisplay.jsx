@@ -79,60 +79,6 @@ const StudentLogsheetdisplay = () => {
     fetch();
   }, []);
 
-  // useEffect(() => {
-  //   if (logsheetActive) {
-  //     const updatedTableData = logsheetActive.map((log) => ({
-  //       member: `${log.firstName} ${log.lastName}`,
-  //       assignedTask: log.assignedTask,
-  //       completedTask: log.completedTask,
-  //       remarks: log.remarks,
-  //       presence: log.presence,
-  //       grade: log.grade,
-  //     }));
-  //     setTableData(updatedTableData);
-  //   }
-  // }, [logsheetActive]);
-  // const tableData = activeProject?.members.map((mem)) => {
-  //   return {
-  //     id:mem_id,
-  //   }
-  // }
-
-  // const [tableData, setTableData] = useState([
-  //   {
-  //     member: "",
-  //     assignedTask: "",
-  //     completedTask: "",
-  //     remarks: "",
-  //     presence: "",
-  //     grade: "",
-  //   },
-  //   {
-  //     member: "Sushankhya Chapagain",
-  //     assignedTask: "frontend ui add task and its authentication",
-  //     completedTask: "add task completed",
-  //     remarks: "",
-  //     presence: "",
-  //     grade: "",
-  //   },
-  //   {
-  //     member: "Ravi Pajiyar",
-  //     assignedTask: "Task A: first task of the week",
-  //     completedTask: "frontend section completed",
-  //     remarks: "",
-  //     presence: false,
-  //     grade: "",
-  //   },
-  //   {
-  //     member: "Sushankhya Chapagain",
-  //     assignedTask: "frontend ui add task and its authentication",
-  //     completedTask: "add task completed",
-  //     remarks: "",
-  //     presence: true,
-  //     grade: "",
-  //   },
-  // ]);
-
   const handleRemarkChange = (e) => {
     console.log(e.target.id, e.target);
     setlogData({
@@ -198,7 +144,6 @@ const StudentLogsheetdisplay = () => {
                       <th>Completed Task</th>
                       <th>Remarks</th>
                       <th>Presence</th>
-                      {/* <th>Grades</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -209,15 +154,14 @@ const StudentLogsheetdisplay = () => {
                         <td>{`${entry.assignedTasks[0]}`}</td>
                         <td>{entry.completedTasks[0] || ""}</td>
                         <td>
-                          <input
-                            type="text"
+                          <label
                             id={entry.assignedTo._id}
                             onChange={(e) => handleRemarkChange(e)}
                             className={styles.remarksInput}
                           />
                         </td>
                         <td>
-                          <input
+                          <label
                             type="checkbox"
                             id={entry.assignedTo._id}
                             onChange={(e) => {

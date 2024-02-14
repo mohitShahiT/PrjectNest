@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "start": "SET NODE_ENV=production&nodemon server.js"
+    "start": "SET NODE_ENV=production&nodemon server.js",
+    "startt": "NODE_ENV=production nodemon server.js"
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,6 @@
 .pagesplit {
   display: flex;
-  height: 80%;
+  height: 95vh;
 }
 .adminPageContent {
   background-color: red;

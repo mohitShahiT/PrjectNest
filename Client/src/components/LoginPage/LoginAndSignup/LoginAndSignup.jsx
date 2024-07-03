@@ -16,16 +16,16 @@ import { useNavigate } from "react-router-dom";
 const LoginAndSignup = ({ clicked, setClicked, signin, setSignin }) => {
   const currentUser = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleCallbackResponse = (response) =>{
-    console.log("response google credential from google", response.credential)
+  const handleCallbackResponse = (response) => {
+    console.log("response google credential from google", response.credential);
     const decoded = jwtDecode(response.credential);
     const userData = {
       email: decoded.email,
       firstName: decoded.given_name,
       lastName: decoded.family_name,
       aud: decoded.aud,
-      photo: decoded.picture
-    }
+      photo: decoded.picture,
+    };
     axios
       .post("http://localhost:8000/api/v1/user/google-sign-up", userData)
       .then((res) => {
@@ -45,21 +45,21 @@ const LoginAndSignup = ({ clicked, setClicked, signin, setSignin }) => {
       .catch((err) => {
         console.log(err);
       });
+  };
 
-  }
-
-  useEffect(()=>{
-    /*global google*/ 
+  useEffect(() => {
+    /*global google*/
     google.accounts.id.initialize({
-      client_id: "277690260012-e7nsqvajlkr2rso77bjireu6e25ra6sp.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    })
-  }, [])
+      client_id:
+        "277690260012-e7nsqvajlkr2rso77bjireu6e25ra6sp.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+  }, []);
 
   google.accounts.id.renderButton(
     document.getElementById("signInWithGoogleBtn"),
-    {theme: "outline", size: "large"}
-  )
+    { theme: "outline", size: "large" }
+  );
   function handleClick() {
     setClicked(!clicked);
   }
@@ -68,8 +68,6 @@ const LoginAndSignup = ({ clicked, setClicked, signin, setSignin }) => {
   }
   return (
     <div className={styles.loginsection}>
-      <div className={`${styles.loginpage} `}></div>
-
       <CatchPhrase />
       <div className={styles.signupbuttons}>
         {/* <Button id="signInWithGoogleBtn" className={`${styles.googlesignup} ${styles.createaccount}`}>

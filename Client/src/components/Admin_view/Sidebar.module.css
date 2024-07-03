@@ -6,7 +6,7 @@
   padding: 20px;
   border-right: 0.5px solid rgb(116, 107, 107);
   text-decoration: none;
-  height: 90vh;
+  height: 95vh;
 }
 .sidebaritem a,
 .hidesidebaritems a {
@@ -35,7 +35,7 @@
   padding: 10px;
   text-align: justify;
   border-right: 1px solid grey;
-  height: 90vh;
+  height: 95vh;
 }
 .hidesidebaritems {
   margin-bottom: 1rem;

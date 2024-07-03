@@ -1,11 +1,12 @@
 .edit_profile_form_container {
-  height: 100%;
+  /* height: 100vh; */
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   background-color: #131a22;
+  overflow: scroll;
 }
 .form1 {
   display: flex;
@@ -68,6 +69,11 @@
 .addedmembers {
   list-style: none;
   color: white;
+  text-align: end;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .removeTeamMembers {
   display: flex;
